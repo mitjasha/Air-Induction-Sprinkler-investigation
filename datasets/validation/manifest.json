@@ -1,0 +1,10 @@
+{
+  "status": "NO_EXPERIMENTAL_DATA",
+  "datasets": [],
+  "required_metadata": [
+    "source", "owner", "license", "geometry_revision", "instrument_ids",
+    "calibration_certificates", "units", "air_reference_conditions",
+    "raw_data_sha256", "processing_version", "replicate_group",
+    "holdout_policy", "uncertainty_budget", "acceptance_criteria", "reviewer"
+  ]
+}

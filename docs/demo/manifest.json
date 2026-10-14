@@ -1,0 +1,60 @@
+{
+  "package_version": "0.1.0",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pint": "0.26.1"
+  },
+  "case_sha256": "183abe3ab09abd3ac1911e875cb91af08b02f5526028db1fcde3372520f8fbd5",
+  "classes": 128,
+  "bins": 30,
+  "uncertainty": {
+    "status": "ASSUMED_SCENARIO_INTERVAL_NOT_CONFIDENCE_INTERVAL",
+    "seed": 42,
+    "samples": 100,
+    "accepted": 100,
+    "rejected": 0,
+    "d32_mm_p05_p50_p95": [
+      0.43811025784171426,
+      0.5614262237248213,
+      0.6754658608617806
+    ],
+    "assumptions": "Independent uniform: C +/-20%, impact +/-10% capped at 1, friction +/-30%"
+  },
+  "dimension_audit": {
+    "nozzle_flow": "meter ** 3 / second",
+    "momentum_pressure": "pascal",
+    "film_thickness": "meter",
+    "film_acceleration": "meter / second ** 2",
+    "weber": "dimensionless",
+    "ohnesorge": "dimensionless",
+    "drag_acceleration": "meter / second ** 2",
+    "rain_intensity": "meter / second",
+    "hydraulic_power": "watt"
+  },
+  "result": {
+    "status": "DEMONSTRATIVE_NOT_VALIDATED",
+    "water_l_min": 15.991268594806632,
+    "air_ref_l_min": 8.342443901869242,
+    "suction_absolute_pa": 36074.9208551057,
+    "alr": 0.0006293061474418908,
+    "kq": 0.5216874353907455,
+    "d32_mm": 0.5497077684950046,
+    "mean_range_m": 1.3101334265240234,
+    "single_head_area_cu_percent": 8.624999999999872,
+    "momentum_residual_pa": -2.3646862246096134e-11,
+    "film_mass_residual_relative": 0.0,
+    "film_energy_residual_m2s2": -9.254463861907425e-11,
+    "rain_mass_residual_relative": 6.661338147750939e-16,
+    "hydraulic_power_w": 53.304228649355444,
+    "outlet_kinetic_power_w": 8.664968519684992,
+    "warnings": [
+      "Uncalibrated closures; no device-specific validation available",
+      "Single-head annular CU depends on quadrature/binning; not field overlap CU"
+    ]
+  },
+  "data_provenance": "Synthetic inputs; no experimental measurements used"
+}

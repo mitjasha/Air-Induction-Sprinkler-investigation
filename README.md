@@ -1,0 +1,105 @@
+# sprinkler1d
+
+**Air entrainment → radial film → droplets → rainfall. An auditable reduced-order engineering workflow.**
+
+Python 3.11+ · MIT · NumPy / SciPy · CLI + Python API · SI units
+
+![Scientific demonstration](docs/demo/overview.png)
+
+> **Research demonstrator, not a validated digital twin.** This is a new implementation inspired by the author's research discussion about an adjustable air-entraining sprinkler. The dissertation, publications, CAD and experimental records were not available. The earlier sprinkler1d package was not found. No published equations or measured results are attributed to the author without source evidence.
+
+## Why this belongs in an engineering portfolio
+
+This project turns a multiphysics research question into an inspectable computational tool: conservation-law modeling, replaceable empirical closures, inverse design, parameter identification, uncertainty scenarios, CFD exchange contracts and automated verification.
+
+For **CAE / CFD** it demonstrates model hierarchy and boundary-data handling; for **multiphysics**, conservative coupling between fluid transport and particle trajectories. For **thermal engineering**, the transferable skills are balance formulation and parameter estimation—heat transfer is not implemented here. For **robotics-adjacent** applications, it offers a foundation for spray footprint models and offline operating-point selection; actuator dynamics, feedback control and ROS integration are future work.
+
+The scientific value of a future validated version would be a measured geometry–entrainment–film–drop relationship and its engineering synthesis. This release makes **no claim of novel physics or experimentally established accuracy**.
+
+## Get running
+
+From the repository root:
+
+    python -m venv .venv
+    # Linux/macOS:
+    source .venv/bin/activate
+    # Windows PowerShell instead:
+    # .\.venv\Scripts\Activate.ps1
+    python -m pip install ".[dev]"
+    pytest
+    sprinkler1d run --config examples/demo.json --output artifacts/demo
+
+Open artifacts/demo/report.html in a browser. It embeds the figure and includes a configuration hash, package versions, numerical settings, residuals and uncertainty assumptions. CSV, JSON, PNG and SVG outputs are also written.
+
+For the exact locally tested dependency versions:
+
+    python -m pip install -c constraints-tested.txt ".[dev]"
+
+The constraints record one tested Windows / Python 3.12 environment, not a guarantee that every version has wheels for every Python release. CI separately exercises the supported Python matrix with the package's declared version ranges.
+
+## Engineering workflows
+
+    # Dimensional audit
+    sprinkler1d dimensions
+
+    # Synthetic recovery: 45 calibration + 15 holdout runs
+    python examples/generate_demo_data.py
+    sprinkler1d calibrate datasets/demo/breakup_synthetic.csv --output artifacts/fit.json
+
+    # Choose pressure and nozzle diameter for two engineering targets
+    sprinkler1d synthesize --config examples/demo.json --flow-l-min 16 --d32-mm 0.55 --output artifacts/design.json
+
+    # Assumed spreads, not experimentally inferred confidence intervals
+    sprinkler1d uncertainty --config examples/demo.json --samples 200 --seed 42 --output artifacts/uncertainty.json
+
+    # After exporting a real CFD section table in the documented format
+    sprinkler1d compare-cfd --config examples/demo.json --csv path/to/film.csv --output artifacts/cfd-comparison.json
+
+Synthesis uses bounded multistart least squares. It reports convergence, target errors, bounds and the full case. An unmet 1% target tolerance returns exit code 2. This is a feasibility search inside a design box, not a global optimum or manufacturing recommendation. Save the returned case object as JSON to simulate the selected design.
+
+    from sprinkler1d import Case, simulate
+    result = simulate(Case(pressure_pa=200_000), classes=128)
+    print(result.summary())
+
+## Architecture
+
+See the [architecture diagram](docs/architecture.md).
+
+| Location | Responsibility |
+|---|---|
+| src/sprinkler1d/ | Physical blocks, synthesis, identification, uncertainty, CFD and CLI |
+| tests/ | Analytic limits, balances, invalid inputs, refinement and end-to-end workflows |
+| examples/ | Full SI case, Python example and seeded synthetic data generator |
+| datasets/demo/ | Synthetic data and generator provenance |
+| datasets/validation/ | Empty measurement templates and evidence requirements |
+| docs/demo/ | Reference report, figures and machine-readable outputs |
+| docs/methodology_ru.md | Russian scientific methodology and equations |
+| docs/verification-matrix.csv | Equation-by-equation evidence and acceptance gates |
+| docs/source-audit.md | Available context and specific missing sources |
+| .github/workflows/ci.yml | Linux/Windows test and report build matrix |
+
+## Verification is not validation
+
+Automated checks cover the momentum residual, liquid continuity, film mechanical-energy identity, dimensional consistency, exact vacuum projectile solution, zero-friction film limit, choked-flow limits, discrete Sauter mean, rainfall volume conservation, numerical refinement and synthetic parameter recovery.
+
+The hydraulic input power bounds the outlet kinetic power. **This is not a full gas/liquid energy equation**: slip, compression work and detailed pressure recovery are omitted. The mixture is evaluated at ambient outlet conditions. Breakup, gas retention, friction and diameter distribution are uncalibrated.
+
+Validated results are intentionally absent. Experimental CSV input produces EXPERIMENTAL_FIT_REQUIRES_REVIEW, never automatic validation. Read the [verification matrix](docs/verification-matrix.csv), [limits](docs/limitations.md) and [source audit](docs/source-audit.md).
+
+## CFD and scientific extension
+
+Every forward report exports cfd_boundary.json. A section CSV can be compared against the film solver. This is a tested data interface; no OpenFOAM, Fluent or other CFD simulation is claimed to have run. See [CFD contract](docs/cfd.md).
+
+The current isothermal, still-air model is small enough for parameter sweeps and design exploration. Coupled thermodynamics, non-axisymmetric ports, instability eigenvalue analysis, measured size distributions and field overlap uniformity belong in later evidence-backed releases.
+
+## Reproducibility and contribution
+
+Run ruff check ., pytest and python -m build before proposing changes. Add analytic or conservation checks for new physics and label every dataset by provenance. Numerical tolerances are not device-accuracy tolerances. Never use synthetic recovery as an experimental accuracy claim.
+
+See [roadmap](docs/roadmap.md), [publication commands](PUBLISH.md), [data contract](datasets/README.md) and [local verification record](docs/local-verification.md).
+
+## References and licensing
+
+The air-orifice treatment uses standard ideal-gas relations; [NASA Glenn's choking explanation](https://www.grc.nasa.gov/www/k-12/BGP/mflchk.html) gives the physical background. Solvers use the official [SciPy solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [least_squares](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html) interfaces. These references support building blocks, not sprinkler accuracy.
+
+New code, documentation and synthetic examples are licensed under [MIT](LICENSE). Third-party articles and future experimental datasets require separate rights/provenance review and are not silently relicensed. Cite software by version and commit until an archival DOI exists.

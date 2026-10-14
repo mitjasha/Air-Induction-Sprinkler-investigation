@@ -1,0 +1,51 @@
+{
+  "status": "DEMONSTRATIVE_NOT_VALIDATED",
+  "converged": true,
+  "target_met": true,
+  "relative_errors": [
+    1.9992268680990577e-05,
+    -0.0005090775433055361
+  ],
+  "prediction_flow_l_min_d32_mm": [
+    16.000319876298896,
+    0.549720007351182
+  ],
+  "bounds_kpa_mm": [
+    [
+      80,
+      2.5
+    ],
+    [
+      350,
+      5.5
+    ]
+  ],
+  "case": {
+    "pressure_pa": 202615.29583363954,
+    "nozzle_m": 0.003988636102005387,
+    "mixing_m": 0.008,
+    "air_area_m2": 1e-06,
+    "radius_start_m": 0.01,
+    "radius_edge_m": 0.025,
+    "height_m": 1.5,
+    "angle_deg": 25.0,
+    "cd_water": 0.92,
+    "cd_air": 0.7,
+    "mixing_loss": 0.2,
+    "impact": 0.85,
+    "friction": 0.003,
+    "retention": 0.3,
+    "degas_length_m": 0.03,
+    "breakup_c": 6.0,
+    "breakup_we_exp": -0.2,
+    "breakup_air_exp": 0.5,
+    "log_sigma": 0.35,
+    "rho_water": 998.2,
+    "mu_water": 0.001002,
+    "sigma": 0.0728,
+    "pressure_atm_pa": 101325.0,
+    "temperature_k": 293.15,
+    "mu_air": 1.81e-05,
+    "vapor_pressure_pa": 2339.0
+  }
+}

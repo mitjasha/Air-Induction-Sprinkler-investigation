@@ -23,5 +23,9 @@ def audit():
             h * (v**2 / ((1 * u.m / u.s**2) * h)) ** 0.2 * (rho * sigma * h / mu**2) ** 0.3,
             "m",
         ),
+        "published_c001_hypothesis_diameter": (
+            0.001 * h * (v**2 / ((1 * u.m / u.s**2) * h)) ** 0.2 * (rho * sigma * h / mu**2) ** 0.3,
+            "m",
+        ),
     }
     return {name: str(value.to(target).units) for name, (value, target) in terms.items()}

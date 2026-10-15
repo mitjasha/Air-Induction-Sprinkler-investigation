@@ -6,4 +6,6 @@ The experimental column is **reported by that paper from Kincaid et al. (1996)**
 
 Provenance class: literature_transcription. Validation status: NOT_VALIDATED. Do not feed this file to the breakup calibration command: its diameter definition and model variables differ. It belongs to the isolated literature audit only.
 
+The source CSV is unchanged by the C=0.001 hypothesis. Generated comparisons live in docs/literature/: literal_equation_dk_mm retains the printed equation; hypothesis_c001_dk_mm contains the explicitly unconfirmed variant. Separate signed errors and metrics compare it against the reported calculation and experiment. Implied per-row C values are diagnostic only. Rounding bounds assume round-to-nearest and describe display precision, not instrument uncertainty. See audit.json for assumptions and comparison.md for all eight rows.
+
 Attribution and source metadata are retained in docs/references.json. These numerical facts do not relicense the article, figures or publisher PDF; full texts are not bundled in this repository.

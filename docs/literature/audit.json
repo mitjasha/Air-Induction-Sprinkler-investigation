@@ -1,11 +1,40 @@
 {
-  "status": "SOURCE_REPRODUCTION_DISCREPANCY",
+  "status": "UNCONFIRMED_CORRECTION_HYPOTHESIS_COMPARISON",
+  "validation_status": "NOT_VALIDATED",
+  "literal_status": "SOURCE_REPRODUCTION_DISCREPANCY",
+  "hypothesis": {
+    "dimensionless_c": 0.001,
+    "status": "HYPOTHESIS_NOT_CONFIRMED_ERRATUM",
+    "selection": "fixed unit-scale hypothesis; not fitted in this audit",
+    "excluded_from_forward_and_inverse_solver": true
+  },
   "source_doi": "10.29235/1817-7204-2019-57-2-230-237",
   "assumptions": "Printed Eqs.18-20; d0 in m; alpha=1; rounded Table 1 Oh and Fr",
   "diameter_definition": "dk as printed; not asserted to be d32",
   "data_kind": "literature_transcription_not_raw_measurements",
   "ratio_min": 979.5429235974877,
   "ratio_max": 1023.3610102024518,
+  "hypothesis_vs_published_calculation": {
+    "mae_mm": 0.012717847168873947,
+    "rmse_mm": 0.0170408217049869,
+    "mape_percent": 1.110892035252024,
+    "max_absolute_relative_error_percent": 2.336101020245171
+  },
+  "hypothesis_vs_reported_experiment": {
+    "mae_mm": 0.16899397247116252,
+    "rmse_mm": 0.1969588558043076,
+    "mape_percent": 15.61126345944347,
+    "max_absolute_relative_error_percent": 23.078837901546965
+  },
+  "rounding_assumptions": {
+    "rule": "round-to-nearest; independent displayed-value bounds",
+    "ohnesorge_half_step": 5e-05,
+    "froude_half_step": 0.5,
+    "reported_calculation_half_step_mm": 0.005,
+    "nozzle_and_exponent_rounding_included": false,
+    "interpretation": "precision compatibility only, not measurement uncertainty",
+    "compatible_rows": 8
+  },
   "rows": [
     {
       "nozzle_mm": 2.98,
@@ -16,7 +45,16 @@
       "reported_calculation_dk_mm": 0.58,
       "reported_difference_mm": 0.12,
       "literal_equation_dk_mm": 579.304847807418,
-      "literal_to_reported_ratio": 998.8014617369276
+      "literal_to_reported_ratio": 998.8014617369276,
+      "hypothesis_c001_dk_mm": 0.579304847807418,
+      "hypothesis_minus_reported_calculation_mm": -0.0006951521925819826,
+      "hypothesis_vs_reported_calculation_error_percent": -0.11985382630723684,
+      "hypothesis_minus_reported_experiment_mm": -0.12069515219258198,
+      "hypothesis_vs_reported_experiment_error_percent": -17.242164598940278,
+      "implied_c_for_exact_reported_calculation": 0.0010011999764807994,
+      "hypothesis_precision_lower_mm": 0.5714908903904232,
+      "hypothesis_precision_upper_mm": 0.5874086804952329,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 4.57,
@@ -27,7 +65,16 @@
       "reported_calculation_dk_mm": 0.82,
       "reported_difference_mm": 0.12,
       "literal_equation_dk_mm": 813.8236727302905,
-      "literal_to_reported_ratio": 992.467893573525
+      "literal_to_reported_ratio": 992.467893573525,
+      "hypothesis_c001_dk_mm": 0.8138236727302905,
+      "hypothesis_minus_reported_calculation_mm": -0.006176327269709403,
+      "hypothesis_vs_reported_calculation_error_percent": -0.7532106426474838,
+      "hypothesis_minus_reported_experiment_mm": -0.1261763272697094,
+      "hypothesis_vs_reported_experiment_error_percent": -13.423013539330785,
+      "implied_c_for_exact_reported_calculation": 0.0010075892696128986,
+      "hypothesis_precision_lower_mm": 0.8005214193946397,
+      "hypothesis_precision_upper_mm": 0.8277303654001673,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 6.12,
@@ -38,7 +85,16 @@
       "reported_calculation_dk_mm": 1.02,
       "reported_difference_mm": 0.06,
       "literal_equation_dk_mm": 1025.5579425350775,
-      "literal_to_reported_ratio": 1005.4489632696838
+      "literal_to_reported_ratio": 1005.4489632696838,
+      "hypothesis_c001_dk_mm": 1.0255579425350774,
+      "hypothesis_minus_reported_calculation_mm": 0.005557942535077354,
+      "hypothesis_vs_reported_calculation_error_percent": 0.5448963269683693,
+      "hypothesis_minus_reported_experiment_mm": -0.0544420574649227,
+      "hypothesis_vs_reported_experiment_error_percent": -5.0409312467521,
+      "implied_c_for_exact_reported_calculation": 0.0009945805670215583,
+      "hypothesis_precision_lower_mm": 1.0056233920765092,
+      "hypothesis_precision_upper_mm": 1.046582378061057,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 9.06,
@@ -49,7 +105,16 @@
       "reported_calculation_dk_mm": 1.28,
       "reported_difference_mm": 0.35,
       "literal_equation_dk_mm": 1253.8149422047843,
-      "literal_to_reported_ratio": 979.5429235974877
+      "literal_to_reported_ratio": 979.5429235974877,
+      "hypothesis_c001_dk_mm": 1.2538149422047844,
+      "hypothesis_minus_reported_calculation_mm": -0.026185057795215627,
+      "hypothesis_vs_reported_calculation_error_percent": -2.0457076402512153,
+      "hypothesis_minus_reported_experiment_mm": -0.3761850577952155,
+      "hypothesis_vs_reported_experiment_error_percent": -23.07883790154697,
+      "implied_c_for_exact_reported_calculation": 0.0010208843082928731,
+      "hypothesis_precision_lower_mm": 1.2260550271152786,
+      "hypothesis_precision_upper_mm": 1.2833271231662173,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 3.07,
@@ -60,7 +125,16 @@
       "reported_calculation_dk_mm": 0.75,
       "reported_difference_mm": -0.07,
       "literal_equation_dk_mm": 737.5681426759177,
-      "literal_to_reported_ratio": 983.4241902345569
+      "literal_to_reported_ratio": 983.4241902345569,
+      "hypothesis_c001_dk_mm": 0.7375681426759176,
+      "hypothesis_minus_reported_calculation_mm": -0.012431857324082363,
+      "hypothesis_vs_reported_calculation_error_percent": -1.657580976544315,
+      "hypothesis_minus_reported_experiment_mm": 0.05756814267591759,
+      "hypothesis_vs_reported_experiment_error_percent": 8.46590333469377,
+      "implied_c_for_exact_reported_calculation": 0.0010168551983264613,
+      "hypothesis_precision_lower_mm": 0.7276340192803326,
+      "hypothesis_precision_upper_mm": 0.7478708649412806,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 4.61,
@@ -71,7 +145,16 @@
       "reported_calculation_dk_mm": 1.02,
       "reported_difference_mm": -0.16,
       "literal_equation_dk_mm": 1008.094301068314,
-      "literal_to_reported_ratio": 988.327746145406
+      "literal_to_reported_ratio": 988.327746145406,
+      "hypothesis_c001_dk_mm": 1.008094301068314,
+      "hypothesis_minus_reported_calculation_mm": -0.011905698931685915,
+      "hypothesis_vs_reported_calculation_error_percent": -1.1672253854594028,
+      "hypothesis_minus_reported_experiment_mm": 0.14809430106831412,
+      "hypothesis_vs_reported_experiment_error_percent": 17.220267566083038,
+      "implied_c_for_exact_reported_calculation": 0.0010118101043910962,
+      "hypothesis_precision_lower_mm": 0.9916418710598156,
+      "hypothesis_precision_upper_mm": 1.0252945470191823,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 6.22,
@@ -82,7 +165,16 @@
       "reported_calculation_dk_mm": 1.25,
       "reported_difference_mm": -0.22,
       "literal_equation_dk_mm": 1253.2820057949123,
-      "literal_to_reported_ratio": 1002.6256046359298
+      "literal_to_reported_ratio": 1002.6256046359298,
+      "hypothesis_c001_dk_mm": 1.2532820057949123,
+      "hypothesis_minus_reported_calculation_mm": 0.003282005794912335,
+      "hypothesis_vs_reported_calculation_error_percent": 0.2625604635929868,
+      "hypothesis_minus_reported_experiment_mm": 0.2232820057949123,
+      "hypothesis_vs_reported_experiment_error_percent": 21.677864640282742,
+      "implied_c_for_exact_reported_calculation": 0.000997381271110782,
+      "hypothesis_precision_lower_mm": 1.22896429810692,
+      "hypothesis_precision_upper_mm": 1.2789295897689104,
+      "compatible_with_display_rounding": true
     },
     {
       "nozzle_mm": 9.15,
@@ -93,7 +185,16 @@
       "reported_calculation_dk_mm": 1.52,
       "reported_difference_mm": -0.21,
       "literal_equation_dk_mm": 1555.5087355077267,
-      "literal_to_reported_ratio": 1023.3610102024518
+      "literal_to_reported_ratio": 1023.3610102024518,
+      "hypothesis_c001_dk_mm": 1.5555087355077266,
+      "hypothesis_minus_reported_calculation_mm": 0.035508735507726596,
+      "hypothesis_vs_reported_calculation_error_percent": 2.3361010202451737,
+      "hypothesis_minus_reported_experiment_mm": 0.24550873550772656,
+      "hypothesis_vs_reported_experiment_error_percent": 18.741124847918055,
+      "implied_c_for_exact_reported_calculation": 0.0009771722686622286,
+      "hypothesis_precision_lower_mm": 1.5183643539740357,
+      "hypothesis_precision_upper_mm": 1.5952007768703806,
+      "compatible_with_display_rounding": true
     }
   ],
   "control_demo_2021": {

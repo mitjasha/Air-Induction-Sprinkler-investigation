@@ -4,13 +4,15 @@ Environment: new isolated virtual environment, Windows 11, Python 3.12.14. Depen
 
 ## Completed checks
 
-- 39 automated tests passed from the installed 0.2.0 wheel in a newly created isolated environment, including two CLI subprocess integration tests and the publication-specific checks.
+- 41 automated tests passed from the installed 0.2.1 wheel in the isolated environment, including forward CLI and literature-audit subprocess checks. The original clean-environment verification of 0.2.0 passed 39 tests; the two added checks cover the explicit hypothesis and its generated artifacts/provenance.
 - Ruff lint passed.
 - Forward CLI generated standalone HTML, PNG, SVG, CSV, a CFD boundary contract and a JSON provenance manifest.
 - The six-panel PNG was visually inspected for readable labels and layout.
 - Synthetic calibration and bounded synthesis CLI examples completed.
 - Source distribution and wheel built successfully; the final wheel was reinstalled and the complete test suite passed again.
 - The 2019 audit produced a literal-to-reported ratio of 979.5429–1023.3610 under its stated assumptions. The eight-row CSV and comparison figure were checked against the source table and inspected visually.
+- The separate fixed C=0.001 hypothesis gives 1.110892% MAPE against the published calculation and 15.611263% against the reported experiment. Maximum absolute relative errors are 2.336101% and 23.078838%, respectively. All eight calculation intervals overlap the hypothesis intervals under the stated display-rounding assumptions. These results do not constitute independent experimental validation.
+- Markdown/CSV/JSON comparisons and PNG/SVG plots were regenerated; the original source CSV and literal equation were retained. The three-panel comparison figure was visually inspected.
 - pip check reported no broken requirements in the final clean environment.
 
 ## Demonstration outputs

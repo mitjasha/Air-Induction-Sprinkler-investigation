@@ -1,5 +1,5 @@
 {
-  "package_version": "0.2.0",
+  "package_version": "0.2.1",
   "python": "3.12.14",
   "platform": "Windows-11-10.0.26200-SP0",
   "dependencies": {
@@ -36,7 +36,8 @@
     "hydraulic_power": "watt",
     "published_froude_squared_convention": "dimensionless",
     "published_exponent_slope": "dimensionless",
-    "published_criterion_diameter": "meter"
+    "published_criterion_diameter": "meter",
+    "published_c001_hypothesis_diameter": "meter"
   },
   "result": {
     "status": "DEMONSTRATIVE_NOT_VALIDATED",

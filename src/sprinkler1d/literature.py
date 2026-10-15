@@ -33,6 +33,16 @@ def criterion_2019(length_m, froude, ohnesorge, x1, x5, alpha=1.0):
     return result
 
 
+def criterion_2019_c001_hypothesis(length_m, froude, ohnesorge, x1, x5, alpha=1.0):
+    """Return metres for the explicit, unconfirmed C=0.001 correction hypothesis.
+
+    C is dimensionless, fixed in advance, and not fitted by this function.
+    This variant is not a published erratum or a validated predictive closure.
+    The literal criterion_2019 remains unchanged and is evaluated separately.
+    """
+    return 0.001 * criterion_2019(length_m, froude, ohnesorge, x1, x5, alpha)
+
+
 def exponents_2019(nozzle_diameter_m):
     """Printed Eqs. 19-20 interpreted with d0 in metres as defined on p.232.
 

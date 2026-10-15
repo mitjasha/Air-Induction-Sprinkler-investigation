@@ -15,7 +15,7 @@
 |---|---|---|
 | Dissertation and exact title/year/institution | Trace equations to the author's work | Bibliography and equation mapping |
 | Author's abstract (автореферат) | Confirm novelty and defended claims | Source register and README |
-| Author calculation sheets / erratum for 2019 Eqs.18–20 | Resolve formula-versus-table discrepancy | literature.py and literature audit |
+| Author calculation sheets / erratum for 2019 Eqs.18–20 | Confirm or reject the fixed C=0.001 hypothesis; distinguish unit-label error from missing prefactor | Both original and hypothesis APIs in literature.py; eight-row literature audit |
 | Experiment reports and calibration certificates | Measurement uncertainty | Validation manifest |
 | Raw water/air flows, pressures and temperature CSV | Ejector identification and holdout | Hydraulic CSV template |
 | CAD / dimensioned drawings / adjustment mechanism | Geometry and feasible design bounds | Case files and CFD provenance |

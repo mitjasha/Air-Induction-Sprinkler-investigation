@@ -108,6 +108,7 @@ def test_dimensional_audit():
     assert result["published_froude_squared_convention"] == "dimensionless"
     assert result["published_exponent_slope"] == "dimensionless"
     assert result["published_criterion_diameter"] == "meter"
+    assert result["published_c001_hypothesis_diameter"] == "meter"
 
 
 def test_end_to_end():

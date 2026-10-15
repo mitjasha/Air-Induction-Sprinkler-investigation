@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Shakhrai
     given-names: Dmitry
-version: 0.2.0
+version: 0.2.1
 date-released: 2026-10-15
 repository-code: "https://github.com/mitjasha/Air-Induction-Sprinkler-investigation"
 license: MIT

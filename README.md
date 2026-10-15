@@ -23,14 +23,18 @@ The research programme develops adjustable air-induction sprinkler heads and the
 | Publication | Contribution used here |
 |---|---|
 | Kravtsov, Shakhrai & Popko, **Agropanorama 5 (2017), 9–15** — [adjustable sprinkler](https://rep.bsatu.by/handle/doc/2800) | Device concept, bench observables and competing hydraulic/energy objectives |
-| Basarevsky, Kravtsov & Shakhrai, **57(2) (2019), 230–237** — [drop similarity criterion](https://doi.org/10.29235/1817-7204-2019-57-2-230-237) | Executable Eqs. 18–20, eight-row Table 1 transcription and reproducibility audit |
+| Basarevsky, Kravtsov & Shakhrai, **57(2) (2019), 230–237** — [drop similarity criterion](https://doi.org/10.29235/1817-7204-2019-57-2-230-237) | Original Eqs. 18–20 preserved alongside an explicitly unconfirmed C=0.001 correction hypothesis; all eight Table 1 rows compared |
 | Kravtsov & Shakhrai, **Agropanorama 1 (2021), 14–18** — [controlled sprinkler systems](https://rep.bsatu.by/handle/doc/12545) | Eqs. 1–6 for entrainment, mixture velocity and multiple-head flow totals; a basis for future automation interfaces |
 
-**The 2019 audit exposes an unresolved discrepancy:** literal printed equations with SI nozzle diameter and alpha=1 do not reproduce the paper's tabulated calculations. No coefficient, sign or unit has been silently repaired. The published diameter dk is not assumed to equal d32. The 2021 paper describes immediate breakup after the deflector for aerated operation; a continuous-film regime is therefore a hypothesis to verify, not a universal device model.
+**The 2019 audit retains both variants.** The literal printed equation gives approximately 1000 times the tabulated diameter. A separate **unconfirmed correction hypothesis**, with dimensionless C=0.001 fixed rather than fitted, gives 1.1109% mean absolute percentage error against the paper's calculated column (maximum 2.3361%). Its error against the reported experimental column is larger: 15.6113% MAPE. Reproducing the published calculation is not independent experimental validation. See the [complete eight-row comparison](docs/literature/comparison.md) and [worked unit check](docs/literature.md#unit-check-and-c0001-hypothesis).
+
+The original function and source table remain intact. The hypothesis is excluded from the forward/inverse solver and does not establish a confirmed erratum. The published diameter dk is not assumed to equal d32. The 2021 paper describes immediate breakup after the deflector for aerated operation; a continuous-film regime therefore requires regime-specific verification.
 
     python examples/literature_audit.py --output artifacts/literature
 
-![Published-equation audit](docs/literature/comparison.png)
+![Original 2019 equation, C=0.001 hypothesis and both reference columns](docs/literature/comparison.png)
+
+The audit exports JSON, CSV, a Markdown table, PNG and vector SVG. Its rounding intervals describe printed precision, not measurement uncertainty.
 
 Read the [eight-source research map and equation audit](docs/literature.md), [machine-readable source register](docs/references.json) and [BibTeX bibliography](docs/references.bib). Full article PDFs are linked at their publishers rather than redistributed under MIT.
 

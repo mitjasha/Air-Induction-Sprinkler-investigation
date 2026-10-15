@@ -19,10 +19,10 @@
   ],
   &quot;assumptions&quot;: &quot;Independent uniform: C +/-20%, impact +/-10% capped at 1, friction +/-30%&quot;
 }</pre>
-    <h2>Research provenance</h2><p>The software includes a separate audit of the <a href="https://doi.org/10.29235/1817-7204-2019-57-2-230-237">2019 similarity-criterion paper</a> and flow accounting from the <a href="https://rep.bsatu.by/handle/doc/12545">2021 control-system paper</a>. The unresolved equation/table discrepancy is documented in the repository. Neither source is used to claim validation of this demonstration. Direct breakup in aerated operation requires checking the applicability of the film model.</p>
+    <h2>Research provenance</h2><p>The software includes a separate audit of the <a href="https://doi.org/10.29235/1817-7204-2019-57-2-230-237">2019 similarity-criterion paper</a> and flow accounting from the <a href="https://rep.bsatu.by/handle/doc/12545">2021 control-system paper</a>. The audit retains the original equation alongside an explicitly unconfirmed C=0.001 correction hypothesis and compares all eight rows with both published calculations and reported experiments. Neither variant is used by this forward calculation; the hypothesis does not establish a confirmed erratum or experimental validation. Direct breakup in aerated operation requires checking the applicability of the film model.</p>
     <h2>Reproduce</h2><pre>sprinkler1d run --config case.json --output reproduced --classes 128 --bins 30</pre>
     <h2>Provenance manifest</h2><pre>{
-  &quot;package_version&quot;: &quot;0.2.0&quot;,
+  &quot;package_version&quot;: &quot;0.2.1&quot;,
   &quot;python&quot;: &quot;3.12.14&quot;,
   &quot;platform&quot;: &quot;Windows-11-10.0.26200-SP0&quot;,
   &quot;dependencies&quot;: {
@@ -59,7 +59,8 @@
     &quot;hydraulic_power&quot;: &quot;watt&quot;,
     &quot;published_froude_squared_convention&quot;: &quot;dimensionless&quot;,
     &quot;published_exponent_slope&quot;: &quot;dimensionless&quot;,
-    &quot;published_criterion_diameter&quot;: &quot;meter&quot;
+    &quot;published_criterion_diameter&quot;: &quot;meter&quot;,
+    &quot;published_c001_hypothesis_diameter&quot;: &quot;meter&quot;
   },
   &quot;result&quot;: {
     &quot;status&quot;: &quot;DEMONSTRATIVE_NOT_VALIDATED&quot;,

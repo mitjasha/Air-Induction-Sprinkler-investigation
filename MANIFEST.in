@@ -1,6 +1,6 @@
-include LICENSE README.md
+include LICENSE README.md CITATION.cff
 include constraints-tested.txt requirements.txt PUBLISH.md CONTRIBUTING.md
-recursive-include docs *.md *.csv *.html *.json *.png *.svg
+recursive-include docs *.md *.csv *.html *.json *.png *.svg *.bib
 recursive-include examples *.py *.json
 recursive-include datasets *.md *.csv *.json
 recursive-include tests *.py

@@ -6,7 +6,7 @@ Python 3.11+ · MIT · NumPy / SciPy · CLI + Python API · SI units
 
 ![Scientific demonstration](docs/demo/overview.png)
 
-> **Research demonstrator, not a validated digital twin.** This is a new implementation inspired by the author's research discussion about an adjustable air-entraining sprinkler. The dissertation, publications, CAD and experimental records were not available. The earlier sprinkler1d package was not found. No published equations or measured results are attributed to the author without source evidence.
+> **Research demonstrator, not a validated digital twin.** Grounded in publications co-authored by Dmitry Shakhrai (2017–2021), with a traceable literature audit and explicitly separate demonstration closures. Dissertation files, raw measurements and the earlier sprinkler1d implementation remain unavailable. Published results are not presented as validation of this new solver.
 
 ## Why this belongs in an engineering portfolio
 
@@ -15,6 +15,24 @@ This project turns a multiphysics research question into an inspectable computat
 For **CAE / CFD** it demonstrates model hierarchy and boundary-data handling; for **multiphysics**, conservative coupling between fluid transport and particle trajectories. For **thermal engineering**, the transferable skills are balance formulation and parameter estimation—heat transfer is not implemented here. For **robotics-adjacent** applications, it offers a foundation for spray footprint models and offline operating-point selection; actuator dynamics, feedback control and ROS integration are future work.
 
 The scientific value of a future validated version would be a measured geometry–entrainment–film–drop relationship and its engineering synthesis. This release makes **no claim of novel physics or experimentally established accuracy**.
+
+## Research behind the software
+
+The research programme develops adjustable air-induction sprinkler heads and their hydraulic control. The repository connects published work to executable engineering checks:
+
+| Publication | Contribution used here |
+|---|---|
+| Kravtsov, Shakhrai & Popko, **Agropanorama 5 (2017), 9–15** — [adjustable sprinkler](https://rep.bsatu.by/handle/doc/2800) | Device concept, bench observables and competing hydraulic/energy objectives |
+| Basarevsky, Kravtsov & Shakhrai, **57(2) (2019), 230–237** — [drop similarity criterion](https://doi.org/10.29235/1817-7204-2019-57-2-230-237) | Executable Eqs. 18–20, eight-row Table 1 transcription and reproducibility audit |
+| Kravtsov & Shakhrai, **Agropanorama 1 (2021), 14–18** — [controlled sprinkler systems](https://rep.bsatu.by/handle/doc/12545) | Eqs. 1–6 for entrainment, mixture velocity and multiple-head flow totals; a basis for future automation interfaces |
+
+**The 2019 audit exposes an unresolved discrepancy:** literal printed equations with SI nozzle diameter and alpha=1 do not reproduce the paper's tabulated calculations. No coefficient, sign or unit has been silently repaired. The published diameter dk is not assumed to equal d32. The 2021 paper describes immediate breakup after the deflector for aerated operation; a continuous-film regime is therefore a hypothesis to verify, not a universal device model.
+
+    python examples/literature_audit.py --output artifacts/literature
+
+![Published-equation audit](docs/literature/comparison.png)
+
+Read the [eight-source research map and equation audit](docs/literature.md), [machine-readable source register](docs/references.json) and [BibTeX bibliography](docs/references.bib). Full article PDFs are linked at their publishers rather than redistributed under MIT.
 
 ## Get running
 
@@ -71,6 +89,7 @@ See the [architecture diagram](docs/architecture.md).
 | tests/ | Analytic limits, balances, invalid inputs, refinement and end-to-end workflows |
 | examples/ | Full SI case, Python example and seeded synthetic data generator |
 | datasets/demo/ | Synthetic data and generator provenance |
+| datasets/literature/ | Attributed published table, separate from raw measurements and synthetic data |
 | datasets/validation/ | Empty measurement templates and evidence requirements |
 | docs/demo/ | Reference report, figures and machine-readable outputs |
 | docs/methodology_ru.md | Russian scientific methodology and equations |

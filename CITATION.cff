@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Please cite this software separately from the publications listed in docs/references.bib."
+title: "sprinkler1d: auditable air-induction sprinkler research workflows"
+type: software
+authors:
+  - family-names: Shakhrai
+    given-names: Dmitry
+version: 0.2.0
+date-released: 2026-10-15
+repository-code: "https://github.com/mitjasha/Air-Induction-Sprinkler-investigation"
+license: MIT

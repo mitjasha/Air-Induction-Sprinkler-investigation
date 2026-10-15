@@ -20,6 +20,7 @@ jobs:
       - run: python -m build --no-isolation
       - run: sprinkler1d run --config examples/demo.json --output artifacts/demo
       - run: sprinkler1d calibrate datasets/demo/breakup_synthetic.csv --output artifacts/calibration.json
+      - run: python examples/literature_audit.py --output artifacts/literature
       - uses: actions/upload-artifact@v4
         with:
           name: report-${{ matrix.os }}-${{ matrix.python }}

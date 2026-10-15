@@ -17,5 +17,11 @@ def audit():
         "drag_acceleration": (rho / rho * v * v / h, "m/s^2"),
         "rain_intensity": (q / h**2, "m/s"),
         "hydraulic_power": (pressure * q, "W"),
+        "published_froude_squared_convention": (v**2 / ((1 * u.m / u.s**2) * h), "dimensionless"),
+        "published_exponent_slope": ((1 / u.m) * h, "dimensionless"),
+        "published_criterion_diameter": (
+            h * (v**2 / ((1 * u.m / u.s**2) * h)) ** 0.2 * (rho * sigma * h / mu**2) ** 0.3,
+            "m",
+        ),
     }
     return {name: str(value.to(target).units) for name, (value, target) in terms.items()}

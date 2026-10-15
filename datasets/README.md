@@ -1,6 +1,6 @@
 # Dataset contract
 
-demo/ contains synthetic records. validation/ contains header-only templates and an empty evidence manifest. There are no measured data in this release.
+demo/ contains synthetic records. validation/ contains header-only templates and an empty evidence manifest. literature/ contains an attributed published table with separate reported experimental and calculated columns. No raw measured dataset is available in this release; literature transcription is not a substitute for one.
 
 | Breakup CSV field | Meaning |
 |---|---|

@@ -17,3 +17,5 @@ flowchart LR
 ```
 
 Block dataclasses expose intermediate states; input Case objects are immutable. The solver composes the blocks without hidden global calibration state. Report generation is downstream of the physical solution.
+
+The source-specific literature.py module is deliberately outside the forward chain. It exposes the 2019 printed-equation audit and the 2021 flow-accounting contract. Neither the unresolved correlation nor the purely kinematic control relations are substituted for the solver's physical blocks.

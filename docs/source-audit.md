@@ -1,11 +1,12 @@
-# Source audit — 2026-10-14
+# Source audit — 2026-10-15
 
 ## Actually available
 
 - The linked discussion “Критериальное уравнение капель”: a conceptual chain, proposed equations and a verification-matrix proposal. Read as background, not a peer-reviewed source or measured dataset.
 - The local project reference directory sources/ was empty.
 - No earlier sprinkler1d package was found in the accessible workspace.
-- The connected GitHub account identified Dmitry Shakhrai (mitjasha). The integration exposed one unrelated repository; no identified sprinkler source was reused. This describes the visible scope, not every repository the author may own.
+- The user supplied mitjasha/Air-Induction-Sprinkler-investigation as the publication destination. It had no Git refs when inspected; no existing sprinkler source code was reused.
+- Eight relevant publications were located and their PDFs obtained from university/journal sites. See references.json for metadata, URLs, access date and PDF SHA-256, and literature.md for the exact use of each source.
 - Existing unrelated topology-optimization portfolio files were not incorporated.
 
 ## Missing sources and integration points
@@ -14,7 +15,7 @@
 |---|---|---|
 | Dissertation and exact title/year/institution | Trace equations to the author's work | Bibliography and equation mapping |
 | Author's abstract (автореферат) | Confirm novelty and defended claims | Source register and README |
-| Articles, DOI/URL, manuscripts | Literature comparison and correlations | Bibliography and breakup closure |
+| Author calculation sheets / erratum for 2019 Eqs.18–20 | Resolve formula-versus-table discrepancy | literature.py and literature audit |
 | Experiment reports and calibration certificates | Measurement uncertainty | Validation manifest |
 | Raw water/air flows, pressures and temperature CSV | Ejector identification and holdout | Hydraulic CSV template |
 | CAD / dimensioned drawings / adjustment mechanism | Geometry and feasible design bounds | Case files and CFD provenance |

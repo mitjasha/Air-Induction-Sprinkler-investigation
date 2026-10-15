@@ -105,7 +105,9 @@ def test_dimensional_audit():
     result = audit()
     assert result["weber"] == "dimensionless"
     assert result["ohnesorge"] == "dimensionless"
-    assert len(result) == 9
+    assert result["published_froude_squared_convention"] == "dimensionless"
+    assert result["published_exponent_slope"] == "dimensionless"
+    assert result["published_criterion_diameter"] == "meter"
 
 
 def test_end_to_end():

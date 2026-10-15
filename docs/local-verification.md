@@ -1,15 +1,17 @@
-# Local verification record — 2026-10-14
+# Local verification record — 2026-10-15
 
 Environment: new isolated virtual environment, Windows 11, Python 3.12.14. Dependencies were installed into that environment, then sprinkler1d was built and installed as a wheel (not an editable checkout). Exact dependency versions are recorded in constraints-tested.txt.
 
 ## Completed checks
 
-- 28 automated tests passed, including two CLI subprocess integration tests.
+- 39 automated tests passed from the installed 0.2.0 wheel in a newly created isolated environment, including two CLI subprocess integration tests and the publication-specific checks.
 - Ruff lint passed.
 - Forward CLI generated standalone HTML, PNG, SVG, CSV, a CFD boundary contract and a JSON provenance manifest.
 - The six-panel PNG was visually inspected for readable labels and layout.
 - Synthetic calibration and bounded synthesis CLI examples completed.
 - Source distribution and wheel built successfully; the final wheel was reinstalled and the complete test suite passed again.
+- The 2019 audit produced a literal-to-reported ratio of 979.5429–1023.3610 under its stated assumptions. The eight-row CSV and comparison figure were checked against the source table and inspected visually.
+- pip check reported no broken requirements in the final clean environment.
 
 ## Demonstration outputs
 

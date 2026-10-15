@@ -1,0 +1,108 @@
+{
+  "status": "SOURCE_REPRODUCTION_DISCREPANCY",
+  "source_doi": "10.29235/1817-7204-2019-57-2-230-237",
+  "assumptions": "Printed Eqs.18-20; d0 in m; alpha=1; rounded Table 1 Oh and Fr",
+  "diameter_definition": "dk as printed; not asserted to be d32",
+  "data_kind": "literature_transcription_not_raw_measurements",
+  "ratio_min": 979.5429235974877,
+  "ratio_max": 1023.3610102024518,
+  "rows": [
+    {
+      "nozzle_mm": 2.98,
+      "pressure_kpa": 69.0,
+      "reported_experiment_dk_mm": 0.7,
+      "ohnesorge": 0.0022,
+      "froude": 4178.0,
+      "reported_calculation_dk_mm": 0.58,
+      "reported_difference_mm": 0.12,
+      "literal_equation_dk_mm": 579.304847807418,
+      "literal_to_reported_ratio": 998.8014617369276
+    },
+    {
+      "nozzle_mm": 4.57,
+      "pressure_kpa": 69.0,
+      "reported_experiment_dk_mm": 0.94,
+      "ohnesorge": 0.0018,
+      "froude": 2725.0,
+      "reported_calculation_dk_mm": 0.82,
+      "reported_difference_mm": 0.12,
+      "literal_equation_dk_mm": 813.8236727302905,
+      "literal_to_reported_ratio": 992.467893573525
+    },
+    {
+      "nozzle_mm": 6.12,
+      "pressure_kpa": 69.0,
+      "reported_experiment_dk_mm": 1.08,
+      "ohnesorge": 0.0015,
+      "froude": 2034.0,
+      "reported_calculation_dk_mm": 1.02,
+      "reported_difference_mm": 0.06,
+      "literal_equation_dk_mm": 1025.5579425350775,
+      "literal_to_reported_ratio": 1005.4489632696838
+    },
+    {
+      "nozzle_mm": 9.06,
+      "pressure_kpa": 69.0,
+      "reported_experiment_dk_mm": 1.63,
+      "ohnesorge": 0.0013,
+      "froude": 1374.0,
+      "reported_calculation_dk_mm": 1.28,
+      "reported_difference_mm": 0.35,
+      "literal_equation_dk_mm": 1253.8149422047843,
+      "literal_to_reported_ratio": 979.5429235974877
+    },
+    {
+      "nozzle_mm": 3.07,
+      "pressure_kpa": 206.0,
+      "reported_experiment_dk_mm": 0.68,
+      "ohnesorge": 0.0022,
+      "froude": 12108.0,
+      "reported_calculation_dk_mm": 0.75,
+      "reported_difference_mm": -0.07,
+      "literal_equation_dk_mm": 737.5681426759177,
+      "literal_to_reported_ratio": 983.4241902345569
+    },
+    {
+      "nozzle_mm": 4.61,
+      "pressure_kpa": 206.0,
+      "reported_experiment_dk_mm": 0.86,
+      "ohnesorge": 0.0018,
+      "froude": 8063.0,
+      "reported_calculation_dk_mm": 1.02,
+      "reported_difference_mm": -0.16,
+      "literal_equation_dk_mm": 1008.094301068314,
+      "literal_to_reported_ratio": 988.327746145406
+    },
+    {
+      "nozzle_mm": 6.22,
+      "pressure_kpa": 206.0,
+      "reported_experiment_dk_mm": 1.03,
+      "ohnesorge": 0.0015,
+      "froude": 5976.0,
+      "reported_calculation_dk_mm": 1.25,
+      "reported_difference_mm": -0.22,
+      "literal_equation_dk_mm": 1253.2820057949123,
+      "literal_to_reported_ratio": 1002.6256046359298
+    },
+    {
+      "nozzle_mm": 9.15,
+      "pressure_kpa": 206.0,
+      "reported_experiment_dk_mm": 1.31,
+      "ohnesorge": 0.0012,
+      "froude": 4063.0,
+      "reported_calculation_dk_mm": 1.52,
+      "reported_difference_mm": -0.21,
+      "literal_equation_dk_mm": 1555.5087355077267,
+      "literal_to_reported_ratio": 1023.3610102024518
+    }
+  ],
+  "control_demo_2021": {
+    "status": "PUBLISHED_KINEMATIC_RELATION_NOT_CONTROLLER_VALIDATION",
+    "entrainment_ratio": 0.5,
+    "water_only_velocity_m_s": 12.732395447351628,
+    "mixture_velocity_m_s": 19.098593171027442,
+    "total_water_m3_s": 0.012,
+    "total_air_m3_s": 0.006
+  },
+  "control_demo_provenance": "assumed numerical example, not a measured operating point"
+}

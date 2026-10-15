@@ -17,7 +17,7 @@ jobs:
       - run: python -m pip install ".[dev]"
       - run: ruff check .
       - run: pytest
-      - run: python -m build --no-isolation
+      - run: python -m build
       - run: sprinkler1d run --config examples/demo.json --output artifacts/demo
       - run: sprinkler1d calibrate datasets/demo/breakup_synthetic.csv --output artifacts/calibration.json
       - run: python examples/literature_audit.py --output artifacts/literature

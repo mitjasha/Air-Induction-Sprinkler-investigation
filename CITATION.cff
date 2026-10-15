@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Please cite this software separately from the publications listed in docs/references.bib."
-title: "sprinkler1d: auditable air-induction sprinkler research workflows"
+title: "sprinkler1d: a reduced-order air-induction sprinkler model"
 type: software
 authors:
   - family-names: Shakhrai

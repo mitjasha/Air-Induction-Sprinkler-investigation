@@ -1,42 +1,30 @@
 # sprinkler1d
 
-**Air entrainment → radial film → droplets → rainfall. An auditable reduced-order engineering workflow.**
+**A reduced-order model of an air-induction sprinkler: air entrainment, radial film flow, droplet breakup and rainfall distribution.**
 
 Python 3.11+ · MIT · NumPy / SciPy · CLI + Python API · SI units
 
-![Scientific demonstration](docs/demo/overview.png)
+I’m developing sprinkler1d to explore how nozzle geometry, water pressure and air entrainment affect droplet size and the rainfall footprint. The calculation follows the flow through an ejector, a radial film on the deflector, droplet formation and flight to the ground.
 
-> **Research demonstrator, not a validated digital twin.** Grounded in publications co-authored by Dmitry Shakhrai (2017–2021), with a traceable literature audit and explicitly separate demonstration closures. Dissertation files, raw measurements and the earlier sprinkler1d implementation remain unavailable. Published results are not presented as validation of this new solver.
+The Python package includes a forward solver, pressure and nozzle selection for target flow and drop size, breakup-parameter fitting, parameter sweeps and HTML reports. Intermediate flow states and balance residuals are available through the Python API and exported files.
 
-## Why this belongs in an engineering portfolio
+![Film flow, droplet sizes and rainfall distribution for the example case](docs/demo/overview.png)
 
-This project turns a multiphysics research question into an inspectable computational tool: conservation-law modeling, replaceable empirical closures, inverse design, parameter identification, uncertainty scenarios, CFD exchange contracts and automated verification.
+The current model uses prescribed geometry and empirical closure coefficients. The included examples use synthetic inputs; calibration against raw measurements is still pending. The [model assumptions](docs/limitations.md) describe the supported calculations and their limits.
 
-For **CAE / CFD** it demonstrates model hierarchy and boundary-data handling; for **multiphysics**, conservative coupling between fluid transport and particle trajectories. For **thermal engineering**, the transferable skills are balance formulation and parameter estimation—heat transfer is not implemented here. For **robotics-adjacent** applications, it offers a foundation for spray footprint models and offline operating-point selection; actuator dynamics, feedback control and ROS integration are future work.
+## Background
 
-The scientific value of a future validated version would be a measured geometry–entrainment–film–drop relationship and its engineering synthesis. This release makes **no claim of novel physics or experimentally established accuracy**.
-
-## Research behind the software
-
-The research programme develops adjustable air-induction sprinkler heads and their hydraulic control. The repository connects published work to executable engineering checks:
+This project continues my work on adjustable sprinkler heads with air induction. Publications I co-authored in 2017–2021 provide the device background and several relations examined in the code:
 
 | Publication | Contribution used here |
 |---|---|
 | Kravtsov, Shakhrai & Popko, **Agropanorama 5 (2017), 9–15** — [adjustable sprinkler](https://rep.bsatu.by/handle/doc/2800) | Device concept, bench observables and competing hydraulic/energy objectives |
-| Basarevsky, Kravtsov & Shakhrai, **57(2) (2019), 230–237** — [drop similarity criterion](https://doi.org/10.29235/1817-7204-2019-57-2-230-237) | Original Eqs. 18–20 preserved alongside an explicitly unconfirmed C=0.001 correction hypothesis; all eight Table 1 rows compared |
-| Kravtsov & Shakhrai, **Agropanorama 1 (2021), 14–18** — [controlled sprinkler systems](https://rep.bsatu.by/handle/doc/12545) | Eqs. 1–6 for entrainment, mixture velocity and multiple-head flow totals; a basis for future automation interfaces |
+| Basarevsky, Kravtsov & Shakhrai, **57(2) (2019), 230–237** — [drop similarity criterion](https://doi.org/10.29235/1817-7204-2019-57-2-230-237) | Eqs. 18–20 and an eight-row comparison of the printed equation and a C=0.001 correction hypothesis with Table 1 |
+| Kravtsov & Shakhrai, **Agropanorama 1 (2021), 14–18** — [controlled sprinkler systems](https://rep.bsatu.by/handle/doc/12545) | Eqs. 1–6 for entrainment, mixture velocity and multiple-head flow totals |
 
-**The 2019 audit retains both variants.** The literal printed equation gives approximately 1000 times the tabulated diameter. A separate **unconfirmed correction hypothesis**, with dimensionless C=0.001 fixed rather than fitted, gives 1.1109% mean absolute percentage error against the paper's calculated column (maximum 2.3361%). Its error against the reported experimental column is larger: 15.6113% MAPE. Reproducing the published calculation is not independent experimental validation. See the [complete eight-row comparison](docs/literature/comparison.md) and [worked unit check](docs/literature.md#unit-check-and-c0001-hypothesis).
+The 2019 equation gives diameters approximately 1000 times those in its published table. I keep the printed relation and a separate C=0.001 correction hypothesis in the [eight-row comparison](docs/literature/comparison.md). Both remain outside the forward solver while the discrepancy is unresolved.
 
-The original function and source table remain intact. The hypothesis is excluded from the forward/inverse solver and does not establish a confirmed erratum. The published diameter dk is not assumed to equal d32. The 2021 paper describes immediate breakup after the deflector for aerated operation; a continuous-film regime therefore requires regime-specific verification.
-
-    python examples/literature_audit.py --output artifacts/literature
-
-![Original 2019 equation, C=0.001 hypothesis and both reference columns](docs/literature/comparison.png)
-
-The audit exports JSON, CSV, a Markdown table, PNG and vector SVG. Its rounding intervals describe printed precision, not measurement uncertainty.
-
-Read the [eight-source research map and equation audit](docs/literature.md), [machine-readable source register](docs/references.json) and [BibTeX bibliography](docs/references.bib). Full article PDFs are linked at their publishers rather than redistributed under MIT.
+The [literature notes](docs/literature.md) cover all eight sources, the unit check and the physical regimes described in the papers. Publication metadata is available in [JSON](docs/references.json) and [BibTeX](docs/references.bib). Full article PDFs are linked at their publishers.
 
 ## Get running
 
@@ -53,13 +41,13 @@ From the repository root:
 
 Open artifacts/demo/report.html in a browser. It embeds the figure and includes a configuration hash, package versions, numerical settings, residuals and uncertainty assumptions. CSV, JSON, PNG and SVG outputs are also written.
 
-For the exact locally tested dependency versions:
+For the dependency versions recorded in the [local verification record](docs/local-verification.md):
 
     python -m pip install -c constraints-tested.txt ".[dev]"
 
-The constraints record one tested Windows / Python 3.12 environment, not a guarantee that every version has wheels for every Python release. CI separately exercises the supported Python matrix with the package's declared version ranges.
+The constraints record a Windows / Python 3.12 environment. CI exercises the supported Python matrix with the package's declared version ranges.
 
-## Engineering workflows
+## Calculations
 
     # Dimensional audit
     sprinkler1d dimensions
@@ -96,33 +84,33 @@ See the [architecture diagram](docs/architecture.md).
 | datasets/literature/ | Attributed published table, separate from raw measurements and synthetic data |
 | datasets/validation/ | Empty measurement templates and evidence requirements |
 | docs/demo/ | Reference report, figures and machine-readable outputs |
-| docs/methodology_ru.md | Russian scientific methodology and equations |
+| docs/methodology_ru.md | Model equations and assumptions in Russian |
 | docs/verification-matrix.csv | Equation-by-equation evidence and acceptance gates |
-| docs/source-audit.md | Available context and specific missing sources |
+| docs/source-audit.md | Source coverage and data needed for calibration |
 | .github/workflows/ci.yml | Linux/Windows test and report build matrix |
 
-## Verification is not validation
+## Model checks and calibration
 
 Automated checks cover the momentum residual, liquid continuity, film mechanical-energy identity, dimensional consistency, exact vacuum projectile solution, zero-friction film limit, choked-flow limits, discrete Sauter mean, rainfall volume conservation, numerical refinement and synthetic parameter recovery.
 
 The hydraulic input power bounds the outlet kinetic power. **This is not a full gas/liquid energy equation**: slip, compression work and detailed pressure recovery are omitted. The mixture is evaluated at ambient outlet conditions. Breakup, gas retention, friction and diameter distribution are uncalibrated.
 
-Validated results are intentionally absent. Experimental CSV input produces EXPERIMENTAL_FIT_REQUIRES_REVIEW, never automatic validation. Read the [verification matrix](docs/verification-matrix.csv), [limits](docs/limitations.md) and [source audit](docs/source-audit.md).
+Experimental calibration is pending. Fits to experimental CSV data receive the status `EXPERIMENTAL_FIT_REQUIRES_REVIEW`; the fit report includes residuals and holdout metrics for review. See the [verification matrix](docs/verification-matrix.csv), [model limits](docs/limitations.md) and [source coverage](docs/source-audit.md).
 
-## CFD and scientific extension
+## CFD interface and next steps
 
-Every forward report exports cfd_boundary.json. A section CSV can be compared against the film solver. This is a tested data interface; no OpenFOAM, Fluent or other CFD simulation is claimed to have run. See [CFD contract](docs/cfd.md).
+Every forward report exports `cfd_boundary.json` with flow and outlet conditions. The `compare-cfd` command compares an external section CSV against the film solution. CFD cases are run separately; the [CFD interface](docs/cfd.md) documents boundary quantities, coordinates and section columns.
 
-The current isothermal, still-air model is small enough for parameter sweeps and design exploration. Coupled thermodynamics, non-axisymmetric ports, instability eigenvalue analysis, measured size distributions and field overlap uniformity belong in later evidence-backed releases.
+Next I plan to add measured geometry, identify the entrainment and film coefficients, and compare predicted droplet distributions with independent measurements. Wind and overlapping sprinkler footprints are further extensions. See the [roadmap](docs/roadmap.md).
 
 ## Reproducibility and contribution
 
-Run ruff check ., pytest and python -m build before proposing changes. Add analytic or conservation checks for new physics and label every dataset by provenance. Numerical tolerances are not device-accuracy tolerances. Never use synthetic recovery as an experimental accuracy claim.
+Run `ruff check .`, `pytest` and `python -m build` before proposing changes. Changes to physical models need analytic or conservation checks. Record the origin of each dataset and distinguish numerical residuals, synthetic recovery errors and errors against measurements.
 
 See [roadmap](docs/roadmap.md), [publication commands](PUBLISH.md), [data contract](datasets/README.md) and [local verification record](docs/local-verification.md).
 
 ## References and licensing
 
-The air-orifice treatment uses standard ideal-gas relations; [NASA Glenn's choking explanation](https://www.grc.nasa.gov/www/k-12/BGP/mflchk.html) gives the physical background. Solvers use the official [SciPy solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [least_squares](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html) interfaces. These references support building blocks, not sprinkler accuracy.
+The air-orifice treatment uses standard ideal-gas relations; [NASA Glenn's choking explanation](https://www.grc.nasa.gov/www/k-12/BGP/mflchk.html) gives the physical background. Solvers use the official [SciPy solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [least_squares](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html) interfaces. The equations and their use in each block are documented in the [methodology](docs/methodology_ru.md).
 
-New code, documentation and synthetic examples are licensed under [MIT](LICENSE). Third-party articles and future experimental datasets require separate rights/provenance review and are not silently relicensed. Cite software by version and commit until an archival DOI exists.
+New code, documentation and synthetic examples are licensed under [MIT](LICENSE). Third-party articles and experimental datasets retain their respective licenses. Cite software by version and commit until an archival DOI exists.

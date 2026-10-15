@@ -8,7 +8,7 @@ from .config import Case
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="sprinkler1d", description="Reduced-order sprinkler research demonstrator"
+        prog="sprinkler1d", description="Reduced-order air-induction sprinkler model"
     )
     sub = parser.add_subparsers(dest="command", required=True)
     run = sub.add_parser("run", help="Generate a reproducible report")

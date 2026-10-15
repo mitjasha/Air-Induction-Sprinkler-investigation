@@ -1,37 +1,24 @@
-# Publish this prepared project
+# Release workflow
 
-Publication destination supplied by the author: https://github.com/mitjasha/Air-Induction-Sprinkler-investigation. The repository was empty when inspected. The commands below also document how to publish an extracted copy of the archive.
+## Verify the checkout
 
-The archive includes source, sample report, templates and CI, excluding virtual environments, caches and Git internals.
-
-## 1. Verify locally
-
-Extract the archive, open a terminal in sprinkler1d/, and activate a virtual environment as described in README.
+From the repository root, activate the virtual environment described in the README and run:
 
     python -m pip install ".[dev]"
-    pytest
     ruff check .
+    pytest
     python -m build
     sprinkler1d run --config examples/demo.json --output artifacts/demo
+    python examples/literature_audit.py --output artifacts/literature
 
-## 2. Create an empty repository
+Review the generated report and literature comparison. Record the environment and results in `docs/local-verification.md` when updating the reference outputs.
 
-For a new fork, create an empty repository under your account and substitute its URL below. For the author's published repository, clone it instead of initializing a separate history.
+## Prepare a release
 
-## 3. Commit and push
+1. Update the version in `pyproject.toml` and `CITATION.cff`, including the release date.
+2. Update the README and roadmap to match the implemented calculations.
+3. Include source data provenance, units and licenses for any new datasets.
+4. Commit the changes and push the release branch to GitHub.
+5. Check the Linux/Windows CI results before tagging the release.
 
-From the extracted archive:
-
-    git init -b main
-    git add .
-    git commit -m "Add reproducible sprinkler research demonstrator"
-    git remote add origin https://github.com/mitjasha/Air-Induction-Sprinkler-investigation.git
-    git push -u origin main
-
-For the prepared local Git checkout, inspect git status and git log -1; skip initialization and initial commit if already present. Replace the remote URL if the owner/name differs.
-
-## 4. Complete the portfolio entry
-
-Wait for GitHub Actions before claiming remote CI passes. Suggested description: “Reduced-order air-entraining sprinkler: multiphysics modeling, inverse design and verification.” Topics: cfd, cae, multiphysics, scientific-computing, python, inverse-problems, irrigation.
-
-Verified publication links and their code mapping are already included. Add the dissertation and raw experimental provenance when available. Preserve demonstrative status until independent measurements support stronger claims. A later release can receive an archival DOI; none is claimed now.
+Build artifacts are written to `dist/`. Keep virtual environments, caches and local calculation outputs out of the release archive.

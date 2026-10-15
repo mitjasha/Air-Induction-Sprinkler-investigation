@@ -1,8 +1,8 @@
 # Applicability and limitations
 
-**No experimentally validated operating range exists in this release.**
+Calibration against raw measurements is pending. The operating range below describes the example inputs and numerical bounds used by the solver.
 
-The example is water/air near 293.15 K and 101325 Pa, gauge pressure 200 kPa, a 4 mm nozzle, 8 mm mixing section, 1 mm² air opening, radial film from 10 to 25 mm, 1.5 m height and 25° launch. These are invented inputs, not recovered device dimensions.
+The example is water/air near 293.15 K and 101325 Pa, gauge pressure 200 kPa, a 4 mm nozzle, 8 mm mixing section, 1 mm² air opening, radial film from 10 to 25 mm, 1.5 m height and 25° launch. These are prescribed example inputs; measured device dimensions are not included.
 
 Synthesis searches 80–350 kPa and 2.5–min(5.5, 0.8*mixing diameter in mm) mm. This is a computational design box, not validated manufacturing or operating limits. The forward solver accepts other SI values if its mathematical checks pass.
 
@@ -20,8 +20,8 @@ The spherical-drag approximation becomes uncertain for deformable drops; the rep
 
 Finite diameter quadrature truncates lognormal tails. Rain histograms and single-head CU depend on class count, bin count and wet-disk definition. Mean range convergence does not prove CU convergence.
 
-Calibration estimates breakup parameters only. Upstream parameters are fixed user inputs. Experimental records still require calibration certificates, independent holdout, error covariance and applicability review before validation claims.
+Calibration estimates breakup parameters only. Upstream parameters are fixed user inputs. Experimental records still require calibration certificates, independent holdout, error covariance and applicability review to assess the calibrated model’s operating range and errors.
 
-## Publication-specific limits added 2026-10-15
+## Relations from publications
 
 The 2019 source formula does not reproduce its table under the documented literal SI interpretation. The original and a separate fixed C=0.001 correction hypothesis are isolated in literature.py and excluded from forward/inverse design. The hypothesis reproduces the calculated column closely but remains unconfirmed; comparison with the reported experiment is descriptive and is not independent validation. Display-rounding intervals do not establish measurement uncertainty. The 2021 device description includes direct post-deflector breakup in aerated operation; the solver's film/breakup chain requires regime verification. See [literature audit](literature.md).

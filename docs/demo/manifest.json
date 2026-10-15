@@ -1,12 +1,12 @@
 {
   "package_version": "0.2.1",
-  "python": "3.12.14",
+  "python": "3.13.14",
   "platform": "Windows-11-10.0.26200-SP0",
   "dependencies": {
-    "numpy": "2.5.4",
-    "scipy": "1.18.1",
-    "matplotlib": "3.11.2",
-    "pint": "0.26.1"
+    "numpy": "2.2.6",
+    "scipy": "1.14.1",
+    "matplotlib": "3.10.9",
+    "pint": "0.24.4"
   },
   "case_sha256": "183abe3ab09abd3ac1911e875cb91af08b02f5526028db1fcde3372520f8fbd5",
   "classes": 128,

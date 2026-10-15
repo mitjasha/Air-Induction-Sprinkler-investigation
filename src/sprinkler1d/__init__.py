@@ -1,4 +1,4 @@
-"""Reduced-order sprinkler research demonstrator; no experimental validation implied."""
+"""Reduced-order model of an air-induction sprinkler."""
 
 from .config import Case
 from .solver import simulate

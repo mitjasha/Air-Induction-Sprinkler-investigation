@@ -35,4 +35,14 @@ The inverse example targeted 16 L/min and 0.55 mm: a feasible result was approxi
 
 The current single-head area-weighted CU is sensitive to diameter quadrature and footprint extent. Do not interpret it as field uniformity. The pressure sweep can encounter inadmissible roots before its requested upper pressure.
 
-The project was pushed to mitjasha/Air-Induction-Sprinkler-investigation and GitHub Actions was triggered. Local results above are independent of remote CI; consult the repository's Actions page for the latest Linux/Windows and Python 3.11–3.13 matrix status. CI builds use an isolated build environment so setuptools/wheel do not have to be preinstalled on the runner.
+The CI configuration covers Linux/Windows and Python 3.11–3.13. Check the repository’s Actions page for run results. CI builds use an isolated build environment.
+
+
+## Documentation revision — 2026-10-15
+
+The project descriptions, CLI help and report captions were updated. Model equations, coefficients and machine-readable result statuses are unchanged.
+
+- 41 tests passed against the source checkout on Windows / Python 3.13.14.
+- Ruff 0.11.13 passed.
+- The forward CLI regenerated the reference HTML report, PNG/SVG figures and accompanying files in docs/demo/. The manifest records the current dependencies and environment.
+- The package build was not repeated for this revision; the wheel-build results above refer to the earlier verification.

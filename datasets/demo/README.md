@@ -1,4 +1,4 @@
-# Synthetic demonstration data
+# Synthetic calibration example
 
 Generator: examples/generate_demo_data.py; seed 20261014.
 

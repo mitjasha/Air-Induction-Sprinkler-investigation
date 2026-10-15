@@ -1,4 +1,4 @@
-# Validation data — intentionally empty
+# Measurement templates
 
 No measured records are available. CSV templates contain headers only.
 

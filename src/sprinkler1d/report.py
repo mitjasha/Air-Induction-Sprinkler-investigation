@@ -99,7 +99,7 @@ def create_report(case, output, classes=128, bins=30):
     fig, axs = plt.subplots(2, 3, figsize=(15, 8.8), layout="constrained")
     fig.patch.set_facecolor("#f8fafc")
     fig.suptitle(
-        "SPRINKLER1D  /  Air-entraining sprinkler\nDemonstrative model · no experimental validation",
+        "SPRINKLER1D  /  Air-entraining sprinkler\nRadial film, droplets and rainfall · example inputs",
         fontsize=21,
         fontweight="bold",
     )
@@ -182,11 +182,11 @@ def create_report(case, output, classes=128, bins=30):
         if isinstance(v, (float, int))
     )
     warnings = "".join(f"<li>{html.escape(x)}</li>" for x in result.warnings)
-    page = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>sprinkler1d | Demonstration report</title>
+    page = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>sprinkler1d | Calculation report</title>
     <style>body{{font:16px/1.6 system-ui,sans-serif;color:#0f172a;background:#f1f5f9;margin:0}}main{{max-width:1100px;margin:auto;padding:48px 28px;background:white}}h1{{font-size:42px;line-height:1.15}}h2{{margin-top:36px}}.tag{{color:#9a3412;background:#ffedd5;padding:8px 14px;border-radius:8px;font-weight:700}}img{{width:100%}}table{{border-collapse:collapse;width:100%}}td{{padding:8px;border-bottom:1px solid #e2e8f0}}td:last-child{{font-family:monospace}}pre{{white-space:pre-wrap;background:#f8fafc;padding:20px;font-size:12px}}</style>
-    <main><span class="tag">DEMONSTRATIVE · NOT VALIDATED</span><h1>From air entrainment<br>to a rainfall footprint.</h1>
-    <p>A reproducible reduced-order engineering calculation. All geometry and closure coefficients are illustrative. No measurement or dissertation result is reproduced.</p>
-    <img alt="Six scientific plots of the demonstration case" src="data:image/png;base64,{encoded}">
+    <main><span class="tag">EXAMPLE CASE · SYNTHETIC INPUTS</span><h1>From air entrainment<br>to a rainfall footprint.</h1>
+    <p>The calculation follows air entrainment, radial film flow, droplet formation and deposition. This example uses prescribed geometry and closure coefficients; calibration against measurements is pending.</p>
+    <img alt="Film flow, droplet sizes and rainfall distribution for the example case" src="data:image/png;base64,{encoded}">
     <h2>Engineering outputs and balance checks</h2><table>{metrics}</table>
     <h2>Interpretation</h2><p>The momentum root and liquid balances verify implementation consistency. They do not establish device accuracy. Air flow is referenced to ambient pressure and temperature. CU describes a single head over the modeled disk and is sensitive to binning; it is not the uniformity of a sprinkler installation.</p>
     <h2>Limitations</h2><ul>{warnings}<li>Homogeneous outlet closure neglects phase slip and internal gas-compression work. Hydraulic-to-kinetic power is an admissibility bound, not a full thermodynamic balance.</li><li>Horizontal radial film; prescribed lossless redirection at the edge. No wind, evaporation, droplet deformation, coalescence, or secondary breakup.</li></ul>

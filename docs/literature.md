@@ -1,18 +1,18 @@
-# Publication-to-code evidence map
+# Publications and model equations
 
-Reviewed 2026-10-15. Author identity was matched through the BSATU repository's full-name record, paper bylines and the user's supplied GitHub repository. The bibliography is a targeted selection, not a claim to cover every publication. Original-language titles, co-authors, source URLs and downloaded-file hashes are in [references.json](references.json); citations are also available as [BibTeX](references.bib).
+The publications below cover the sprinkler designs, hydraulic observations and droplet-size relations used in this project. Original-language titles, co-authors, source URLs and PDF checksums are in the [source register](references.json); citations are also available as [BibTeX](references.bib).
 
-## Eight relevant sources located
+## Bibliography and use in the code
 
 | Source | Evidence inspected and integration |
 |---|---|
 | Shakhrai & Basarevsky, 2017, [Анализ характеристик искусственного дождя при проектировании дождевальных машин](https://rep.bsatu.by/handle/doc/713), pp.384–387 | Quality-of-rain context; supports tracking intensity, coverage and drop characteristics separately. No coefficients imported. |
 | Shakhrai, Basarevsky, Kravtsov & Popko, 2017, [Направления развития дождевальной техники](https://rep.bsatu.by/handle/doc/1791), pp.146–149 | Research context and adjustable-head direction; bibliography, not numerical validation. |
-| Kravtsov, Basarevsky, Shakhrai & Popko, 2017, [Совершенствование насадок для широкозахватной дождевальной техники](https://rep.bsatu.by/handle/doc/1796), pp.149–152 | Related design paper; indexed and full text obtained. No distinct numerical calibration claimed. |
+| Kravtsov, Basarevsky, Shakhrai & Popko, 2017, [Совершенствование насадок для широкозахватной дождевальной техники](https://rep.bsatu.by/handle/doc/1796), pp.149–152 | Related design paper; used for device context. No calibration coefficients are taken from it. |
 | Kravtsov, Shakhrai & Popko, 2017, [Дождевальная насадка с регулируемыми гидравлическими параметрами](https://rep.bsatu.by/handle/doc/2800), Agropanorama 5, pp.9–15 | Device, bench, volume-flow relations and trade-offs; measured curves retained as published qualitative evidence, not digitized raw data. |
 | Kravtsov, Shakhrai, Basarevsky & Popko, 2018, [Исследование дождевальной насадки с регулируемыми гидравлическими параметрами](https://rgatu.ru/archive/sborniki_konf/25_04/sbor_2.pdf), printed pp.175–179 | Related bench study; confirms observables and design objectives. These related reports must not be counted as independent datasets without run provenance. |
 | Shakhrai, Kravtsov & Basarevsky, 2018, [Анализ факторов, влияющих на размер капель искусственного дождя, образованного дефлекторными насадками](https://rep.bsatu.by/handle/doc/5684), pp.382–386 | Similarity approach and film-to-drop research context. Eq.1 explicitly includes C, supporting investigation of a missing prefactor without confirming its value. |
-| Basarevsky, Kravtsov & Shakhrai, 2019, [Критериальное уравнение подобия для определения диаметра капель искусственного дождя](https://doi.org/10.29235/1817-7204-2019-57-2-230-237), Proceedings of the National Academy of Sciences of Belarus, Agrarian Series 57(2), pp.230–237 | Original Eqs.18–20, eight-row source transcription and separately labeled C=0.001 hypothesis; no confirmed correction claimed. |
+| Basarevsky, Kravtsov & Shakhrai, 2019, [Критериальное уравнение подобия для определения диаметра капель искусственного дождя](https://doi.org/10.29235/1817-7204-2019-57-2-230-237), Proceedings of the National Academy of Sciences of Belarus, Agrarian Series 57(2), pp.230–237 | Original Eqs.18–20, eight-row source transcription and separately labeled C=0.001 hypothesis; the correction remains unconfirmed. |
 | Kravtsov & Shakhrai, 2021, [Совершенствование дождевальных машин применением дождеобразующих устройств с регулируемыми гидравлическими характеристиками](https://rep.bsatu.by/handle/doc/12545), Agropanorama 1, pp.14–18 | Eqs.1–6 implemented as a flow contract; water/air valve and sensor architecture informs the automation roadmap. |
 
 ## Executable 2019 audit
@@ -23,7 +23,7 @@ Run from the repository root:
 
 The script produces comparison.csv, audit.json, [comparison.md](literature/comparison.md), comparison.png and comparison.svg. Both variants use the exact printed signs in Eqs.18–20, d0 in metres (the definition on p.232), L=d0, alpha=1 and the rounded Oh/Fr entries of Table 1. Here Fr=v²/(gL), rather than the alternative square-root convention. The exponent slopes are dimensional inverse-metre constants.
 
-The literal result remains approximately 980–1023 times the tabulated calculation. A second API, criterion_2019_c001_hypothesis, multiplies that unchanged SI result by a fixed dimensionless C=0.001. This is an explicit correction hypothesis requested by the author, not an established erratum. It is isolated from the forward and inverse models. Per-row implied C values are diagnostics and never used to tune a prediction.
+The literal result remains approximately 980–1023 times the tabulated calculation. A second API, criterion_2019_c001_hypothesis, multiplies that unchanged SI result by a fixed dimensionless C=0.001. The C=0.001 prefactor is a correction hypothesis; confirmation requires the original calculation sheet or an erratum. It is isolated from the forward and inverse models. Per-row implied C values are diagnostics and never used to tune a prediction.
 
 This source-specific C is separate from the demonstration breakup coefficient fitted by the calibrate command.
 
@@ -65,4 +65,4 @@ The 2021 text describes direct breakup after the deflector in aerated operation 
 
 The 2021 bibliography mentions BY 22927 and BY 22747. Their primary patent texts and current status have not been checked and no patent-claim or freedom-to-operate conclusion is made. MIT covers this new software, not third-party article content or hardware patent rights.
 
-Next evidence needed: original 2019 calculation workbook; precise drop-size statistic; run-level pressure, water/air flow and pump-power records with gas reference conditions; dimensioned CAD and valve settings; film/breakup video; independently held-out droplet and catch-can measurements. Dissertation and author abstract remain pending upload.
+Next evidence needed: original 2019 calculation workbook; precise drop-size statistic; run-level pressure, water/air flow and pump-power records with gas reference conditions; dimensioned CAD and valve settings; film/breakup video; independently held-out droplet and catch-can measurements. The dissertation and author’s abstract are not included in the source register.

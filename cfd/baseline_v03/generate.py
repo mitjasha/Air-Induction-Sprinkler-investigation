@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Axisymmetric annular-air-inlet ejector baseline, OpenFOAM.com interFoam.
 
 This *generator* is Python-validated, not OpenFOAM-run-validated.
@@ -78,7 +79,7 @@ def mesh_geometry(cfg, with_deflector):
     ensure(ncore >= 3 and nair >= 2, 'Insufficient radial cells')
     angle=math.radians(float(cfg['wedge_angle_deg']))/2
     ensure(math.radians(1)<=2*angle<=math.radians(6),'Wedge angle must be 1–6°')
-    xyz=[]; verts={}; cells=[]; segments=[]
+    xyz=[]; verts={}; cells=[]
     def vid(z,rad,side):
         if abs(rad)<1e-14: side=0
         key=(round(z,11), round(rad,11),side)

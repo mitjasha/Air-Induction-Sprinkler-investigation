@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Parametric 3D *geometry/mesh prototype* with discrete lateral air duct.
 
 Requires gmsh Python bindings (and working OpenCASCADE). No flow BCs are

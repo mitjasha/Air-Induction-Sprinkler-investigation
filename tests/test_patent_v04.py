@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """CFD v0.4 checks are static; OpenFOAM is not installed in the CI runner."""
 import json
 from pathlib import Path

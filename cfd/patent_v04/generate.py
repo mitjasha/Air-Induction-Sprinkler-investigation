@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Patent-informed CFD v0.4 case builder: thin diaphragm, feed, annular 2D air proxy.
 
 Run: python -m cfd.patent_v04.generate --out-dir cfd/patent_v04/generated

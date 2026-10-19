@@ -23,7 +23,6 @@ def run_case(study_dir: Path, name: str, steps: list[str]) -> dict:
         raise ValueError('Unknown case directory; generate cases before running')
     if any(x not in STEPS for x in steps):
         raise ValueError('Unknown step')
-    meta = json.loads((case/'case_manifest.json').read_text(encoding='utf-8'))
     audit = {'case':name,'started_utc':datetime.now(timezone.utc).isoformat(),
              'solver_path':shutil.which('interFoam'), 'steps':[], 'status':'IN_PROGRESS'}
     for step in steps:

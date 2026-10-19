@@ -28,8 +28,10 @@ def build_sweep(out_dir: Path, config: Path | None = None,grid: str='coarse',
     rows=[]
     for parameter, values in DEFAULT_SWEEP.items():
         for value in values:
-            if abs(value-geo[parameter])<1e-9:continue
-            if len(rows)>=max_cases:raise ValueError('Screening matrix exceeds max_cases')
+            if abs(value-geo[parameter])<1e-9:
+                continue
+            if len(rows)>=max_cases:
+                raise ValueError('Screening matrix exceeds max_cases')
             cfg={**geo,**study['mesh_levels'][grid],parameter:value,
                  'air_mode':air_mode,'end_time_s':study['end_time_s']}
             slug=str(value).replace('.','p')
@@ -59,4 +61,5 @@ def main():
     args=ap.parse_args()
     print(json.dumps(build_sweep(args.out_dir,args.config,args.grid,args.air_mode),indent=2))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    main()

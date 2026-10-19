@@ -12,7 +12,8 @@ from pathlib import Path
 
 def compare(study_dir: Path, report_dir: Path) -> dict:
     study_dir=Path(study_dir).expanduser().resolve()
-    report_dir=Path(report_dir).expanduser().resolve();report_dir.mkdir(parents=True,exist_ok=True)
+    report_dir=Path(report_dir).expanduser().resolve()
+    report_dir.mkdir(parents=True,exist_ok=True)
     levels=['coarse','medium','fine']
     modes=['open','closed']
     rows=[]
@@ -31,7 +32,9 @@ def compare(study_dir: Path, report_dir: Path) -> dict:
             rows.append(row)
     with (report_dir/'comparison.csv').open('w',newline='',encoding='utf-8') as out:
         cols=['case','level','air_mode','has_report','k_phi','kQ','quasi_steady','relative_balance']
-        wr=csv.DictWriter(out,fieldnames=cols);wr.writeheader();wr.writerows(rows)
+        wr=csv.DictWriter(out,fieldnames=cols)
+        wr.writeheader()
+        wr.writerows(rows)
     by_name={x['case']:x for x in rows}
     changes={}
     for a,b in [('coarse','medium'),('medium','fine')]:
@@ -52,7 +55,8 @@ def compare(study_dir: Path, report_dir: Path) -> dict:
                   'in k_phi is not validation of real gas entrainment; inspect yPlus, '
                   'phase fluxes, pressure and interface evolution independently.\n')
         out.write('\n## Mesh sensitivity of mixture flux ratio\n\n')
-        for k,v in changes.items():out.write(f'- {k}: {v:.2%}\n')
+        for k,v in changes.items():
+            out.write(f'- {k}: {v:.2%}\n')
     return {'cases':len(rows),'reports':sum(1 for r in rows if r['has_report']),
             'mesh_relative_changes':changes, 'report':str(report_dir)}
 
@@ -64,4 +68,5 @@ def main():
     args=ap.parse_args()
     print(json.dumps(compare(args.study_dir,args.report),indent=2))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    main()

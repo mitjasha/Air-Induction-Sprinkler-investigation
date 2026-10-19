@@ -26,4 +26,5 @@ def main():
     if results and results[-1]['status'].startswith('FAILED'):
         raise SystemExit(1)
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    main()

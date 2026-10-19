@@ -31,7 +31,8 @@ def main():
     names=set(reader.CellArrays.Available)
     reader.CellArrays=[x for x in ['U','alpha.water','p_rgh','p','k','omega','nut'] if x in names]
     ts=[float(t) for t in reader.TimestepValues]
-    if not ts:raise SystemExit('No OpenFOAM time steps present')
+    if not ts:
+        raise SystemExit('No OpenFOAM time steps present')
     t=float(a.time) if a.time is not None else ts[-1]
     if min(abs(t-x) for x in ts)>1e-8:
         raise SystemExit(f'Time {t} not present in OpenFOAM saved times: {ts}')
@@ -51,4 +52,5 @@ def main():
     for z in (10,30,50,70,90):
         export(f'radial_z{z}mm',[0.0001,0,z*0.001],[0.00465,0,z*0.001],100)
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    main()

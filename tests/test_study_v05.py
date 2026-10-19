@@ -54,7 +54,8 @@ def test_bad_turbulence_intensity_rejected():
 
 
 def test_flux_restart_and_volumetric_balance(tmp_path):
-    a=tmp_path/'log.interFoam';b=tmp_path/'log.interFoam_60ms'
+    a=tmp_path/'log.interFoam'
+    b=tmp_path/'log.interFoam_60ms'
     a.write_text('Time = 0.03\nsum(airInlet) of phi = -2.5e-6\n'
       'sum(waterInlet) of phi = -8e-6\nsum(ambientOpen) of phi = 0\n'
       'sum(outlet) of phi = 10.5e-6\n')
@@ -88,7 +89,8 @@ def test_paraview_profile_checks_masks(tmp_path):
         ])
     q=qc_profile(f)
     assert q['n_valid']==2 and q['z_max_mm']==pytest.approx(45)
-    p=tmp_path/'case';p.mkdir()
+    p=tmp_path/'case'
+    p.mkdir()
     s=summarize(p,tmp_path/'report',{'axis':f})
     assert any('before 90 mm' in x for x in s['flags'])
 

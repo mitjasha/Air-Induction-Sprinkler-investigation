@@ -26,6 +26,12 @@ The 2019 equation gives diameters approximately 1000 times those in its publishe
 
 The [literature notes](docs/literature.md) cover all eight sources, the unit check and the physical regimes described in the papers. Publication metadata is available in [JSON](docs/references.json) and [BibTeX](docs/references.bib). Full article PDFs are linked at their publishers.
 
+## CFD v0.5 — turbulence, mesh study and automated research
+
+The [CFD v0.5 study](cfd/study_v05/README.md) builds a six-case OpenFOAM.com study matrix (three mesh resolutions × open/closed air intake) with exploratory RANS `kOmegaSST` turbulence and configurable inlet assumptions. It includes a checked sequential runner, diagnostic postprocessing for **mixture** flux history and mass-volume balance, a geometry parameter sweep, and [Russian research workflow](docs/CFD_V05_WORKFLOW_RU.md).
+
+The [v0.4 reference profiles](cfd/study_v05/reference_v04/README.md) are archived with their analytical plots as provenance; they are **not** SST or v0.5 CFD validation. The v0.5 cases still require `blockMesh`, `checkMesh`, `interFoam -dry-run`, mesh/time convergence, measured phase-specific air entrainment, and independent evidence before scientific conclusions. In particular, a mixture flux ratio must not be presented as a physically measured air-to-water flow ratio.
+
 ## CFD v0.4 — patent-informed ejector geometry
 
 The [CFD v0.4 module](cfd/patent_v04/README.md) generates configurable OpenFOAM.com `interFoam` cases for a thin-diaphragm water nozzle, suction chamber and mixing throat, including open/closed annular-air variants. An experimental Gmsh 3D geometry includes a lateral air inlet. The module references patents BY 22927 and BY 22747 and keeps unmeasured dimensions as explicit initial parameters; neither the new OpenFOAM mesh nor its 3D prototype has yet been solver-validated.

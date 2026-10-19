@@ -1,0 +1,29 @@
+{
+  "geometry_config": "../patent_v04/config_open.json",
+  "model": "kOmegaSST",
+  "turbulence": {
+    "water_inlet_intensity": 0.05,
+    "water_length_scale_fraction_of_feed_d": 0.07,
+    "air_inlet_intensity": 0.05,
+    "air_reference_speed_m_s": 1.0,
+    "air_length_scale_m": 0.003,
+    "Cmu": 0.09
+  },
+  "mesh_levels": {
+    "coarse": {"radial_cells_core": 20, "radial_cells_air": 10, "axial_cell_size_mm": 0.7},
+    "medium": {"radial_cells_core": 32, "radial_cells_air": 18, "axial_cell_size_mm": 0.45},
+    "fine": {"radial_cells_core": 48, "radial_cells_air": 28, "axial_cell_size_mm": 0.30}
+  },
+  "air_modes": ["open", "closed"],
+  "end_time_s": 0.06,
+  "write_interval_s": 0.002,
+  "max_co": 0.2,
+  "max_alpha_co": 0.2,
+  "postprocessing": {
+    "quasi_steady_window_s": 0.01,
+    "allowed_flow_variation_fraction": 0.05,
+    "sample_axial_r_mm": [1.0, 3.0, 4.5],
+    "sample_axial_z_mm": [10.0, 90.0],
+    "sample_radial_z_mm": [10.0, 30.0, 50.0, 70.0, 90.0]
+  }
+}

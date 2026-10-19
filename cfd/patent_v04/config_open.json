@@ -1,0 +1,22 @@
+{
+  "nozzle_d_mm": 7.9,
+  "feed_d_mm": 16.0,
+  "feed_length_mm": 12.0,
+  "diaphragm_thickness_mm": 1.2,
+  "throat_d_mm": 9.5,
+  "throat_length_mm": 85.0,
+  "nozzle_to_throat_gap_mm": 8.0,
+  "suction_chamber_d_mm": 16.0,
+  "air_port_d_mm": 5.0,
+  "air_port_length_mm": 20.0,
+  "deflector_standoff_mm": 15.0,
+  "deflector_radius_mm": 14.0,
+  "deflector_length_mm": 25.0,
+  "water_inlet_speed_m_s": 2.9251875,
+  "wedge_angle_deg": 5.0,
+  "radial_cells_core": 20,
+  "radial_cells_air": 10,
+  "axial_cell_size_mm": 0.7,
+  "end_time_s": 0.03,
+  "air_mode": "open"
+}

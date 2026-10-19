@@ -26,6 +26,10 @@ The 2019 equation gives diameters approximately 1000 times those in its publishe
 
 The [literature notes](docs/literature.md) cover all eight sources, the unit check and the physical regimes described in the papers. Publication metadata is available in [JSON](docs/references.json) and [BibTeX](docs/references.bib). Full article PDFs are linked at their publishers.
 
+## CFD v0.4 — patent-informed ejector geometry
+
+The [CFD v0.4 module](cfd/patent_v04/README.md) generates configurable OpenFOAM.com `interFoam` cases for a thin-diaphragm water nozzle, suction chamber and mixing throat, including open/closed annular-air variants. An experimental Gmsh 3D geometry includes a lateral air inlet. The module references patents BY 22927 and BY 22747 and keeps unmeasured dimensions as explicit initial parameters; neither the new OpenFOAM mesh nor its 3D prototype has yet been solver-validated.
+
 ## Get running
 
 From the repository root:

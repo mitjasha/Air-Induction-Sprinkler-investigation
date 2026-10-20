@@ -44,7 +44,14 @@ def test_generator_six_cases_and_sst_settings(tmp_path):
         assert schemes.count('wallDist') == 1
         assert 'method meshWave;' in schemes
         assert '    omega {' in (path/'system/fvSolution').read_text()
-        assert 'wallYPlus' in (path/'system/controlDict').read_text()
+        control = (path/'system/controlDict').read_text()
+        assert 'wallYPlus' in control
+        assert 'waterInventory' in control
+        inventory = control.split('waterInventory', 1)[1].split('}', 1)[0]
+        assert 'type volFieldValue;' in inventory
+        assert 'operation volIntegrate;' in inventory
+        assert 'fields (alpha.water);' in inventory
+        assert 'writeFields false;' in inventory
         assert 'endTime 0.06;' in (path/'system/controlDict').read_text()
         assert 'writeInterval 0.002;' in (path/'system/controlDict').read_text()
         assert json.loads((path/'case_manifest.json').read_text())['status']=='GENERATED_UNRUN_V05'

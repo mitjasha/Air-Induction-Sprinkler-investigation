@@ -202,3 +202,30 @@ def test_medium_fine_mesh_use_wall_grading(tmp_path):
     assert 'simpleGrading (1 1 1)' in coarse
     assert 'simpleGrading (0.45' in medium
     assert 'simpleGrading (0.25' in fine
+
+
+def test_phase_kq_only_after_verified_saved_inventory_and_purity(tmp_path):
+    from cfd.study_v05.phase_flux import calculate
+    case=tmp_path/'case'
+    boundary=case/'constant/polyMesh/boundary'
+    boundary.parent.mkdir(parents=True)
+    names=('waterInlet','airInlet','ambientOpen','outlet')
+    boundary.write_text('4\n(\n'+''.join(
+        f'{n} {{ type patch; nFaces 1; startFace {i}; }}\n'
+        for i,n in enumerate(names))+')\n')
+    def foam_flux(vals):
+        return ('FoamFile { format ascii; class surfaceScalarField; }\n'
+                'boundaryField {\n'+''.join(
+                    f'{p} {{ value nonuniform List<scalar> 1 ({x}); }}\n'
+                    for p,x in zip(names,vals))+'}\n')
+    for t in ('0.01','0.02','0.03'):
+        folder=case/t;folder.mkdir()
+        (folder/'phi').write_text(foam_flux([-8e-6,-6e-6,0,14e-6]))
+        (folder/'alphaPhi0.water').write_text(foam_flux([-8e-6,0,0,8e-6]))
+    inv=case/'postProcessing/waterInventory/0';inv.mkdir(parents=True)
+    (inv/'volFieldValue.dat').write_text('# Time volIntegrate(alpha.water)\n'
+        '0.01 1e-6\n0.02 1e-6\n0.03 1e-6\n')
+    r=calculate(case,tmp_path/'report')
+    assert r['kQ_phase_resolved']==pytest.approx(.75)
+    assert r['status']=='WATER_PHASE_BUDGET_NUMERICALLY_CONSISTENT'
+    assert r['water_phase_conservation_rel_max']==pytest.approx(0)

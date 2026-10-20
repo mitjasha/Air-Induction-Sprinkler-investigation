@@ -38,10 +38,10 @@ def test_generator_six_cases_and_sst_settings(tmp_path):
         assert 'type nutUSpaldingWallFunction;' in (path/'0/nut').read_text()
         assert 'simulationType RAS;' in (path/'constant/turbulenceProperties').read_text()
         assert 'RASModel kOmegaSST;' in (path/'constant/turbulenceProperties').read_text()
-        schemes = (path/'system/fvSchemes').read_text()
+        schemes=(path/'system/fvSchemes').read_text()
         assert 'div(phi,k)' in schemes
         assert schemes.count('wallDist') == 1
-        assert 'wallDist\n{\n    method meshWave;\n}' in schemes
+        assert 'method meshWave;' in schemes
         assert '    omega {' in (path/'system/fvSolution').read_text()
         assert 'wallYPlus' in (path/'system/controlDict').read_text()
         assert 'endTime 0.06;' in (path/'system/controlDict').read_text()
@@ -57,8 +57,7 @@ def test_bad_turbulence_intensity_rejected():
 
 
 def test_flux_restart_and_volumetric_balance(tmp_path):
-    a=tmp_path/'log.interFoam'
-    b=tmp_path/'log.interFoam_60ms'
+    a=tmp_path/'log.interFoam';b=tmp_path/'log.interFoam_60ms'
     a.write_text('Time = 0.03\nsum(airInlet) of phi = -2.5e-6\n'
       'sum(waterInlet) of phi = -8e-6\nsum(ambientOpen) of phi = 0\n'
       'sum(outlet) of phi = 10.5e-6\n')
@@ -92,8 +91,7 @@ def test_paraview_profile_checks_masks(tmp_path):
         ])
     q=qc_profile(f)
     assert q['n_valid']==2 and q['z_max_mm']==pytest.approx(45)
-    p=tmp_path/'case'
-    p.mkdir()
+    p=tmp_path/'case';p.mkdir()
     s=summarize(p,tmp_path/'report',{'axis':f})
     assert any('before 90 mm' in x for x in s['flags'])
 
@@ -119,3 +117,87 @@ def test_parameter_sweep_generated_safely(tmp_path):
         manifest=json.loads((tmp_path/'sweep'/row['case']/'case_manifest.json').read_text())
         assert manifest['status']=='GENERATED_UNRUN_V05'
         assert manifest['parameter_varied']==row['parameter']
+
+
+def test_closed_case_quasi_steady_by_outlet_not_kphi(tmp_path):
+    case=tmp_path/'closed'
+    case.mkdir()
+    (case/'case_manifest.json').write_text('{"turbulence_model":"kOmegaSST"}')
+    logs=case/'log.interFoam'
+    contents=[]
+    for t, out in [(0.050, 8.270e-6), (0.052,8.275e-6), (0.054,8.271e-6),
+                   (0.056,8.272e-6), (0.058,8.269e-6), (0.060,8.272e-6)]:
+        contents += [f'Time = {t}', 'sum(airInlet) of phi = 0',
+                     'sum(waterInlet) of phi = -8.1583e-6',
+                     f'sum(ambientOpen) of phi = {8.1583e-6-out}',
+                     f'sum(outlet) of phi = {out}']
+    logs.write_text('\n'.join(contents)+'\n')
+    r=summarize(case,tmp_path/'report')
+    assert r['flux_quasi_steady'] is True
+    assert r['flux_quasi_steady_observable']=='outlet'
+    assert r['kQ_phase_resolved'] is None
+
+
+def test_phase_flux_parser_and_fail_closed(tmp_path):
+    from cfd.study_v05.phase_flux import patch_flux, calculate
+    txt='''FoamFile { class surfaceScalarField; format ascii; }
+    boundaryField
+    {
+        waterInlet { type calculated; value nonuniform List<scalar> 2 (-1 -2); }
+        airInlet { type calculated; value uniform 0; }
+        ambientOpen { type calculated; value nonuniform List<scalar> 1 (0.2); }
+        outlet { type calculated; value nonuniform List<scalar> 1 (2.8); }
+    }'''
+    assert patch_flux(txt,'waterInlet',2)==-3
+    assert patch_flux(txt,'airInlet',1)==0
+    with pytest.raises(ValueError,match='count mismatch'):
+        patch_flux(txt,'waterInlet',3)
+    case=tmp_path/'case';(case/'constant/polyMesh').mkdir(parents=True)
+    boundary='''4\n(\n'''
+    for name,n in [('waterInlet',2),('airInlet',1),('ambientOpen',1),('outlet',1)]:
+        boundary+=f'{name}\n{{\n type patch;\n nFaces {n};\n startFace 0;\n}}\n'
+    (case/'constant/polyMesh/boundary').write_text(boundary+')')
+    d=case/'0.06';d.mkdir()
+    (d/'phi').write_text(txt)
+    r=calculate(case,tmp_path/'rep')
+    assert r['rows']==0
+    assert r['kQ_phase_resolved'] is None
+    assert any('alphaPhi0.water' in s for s in r['flags'])
+    (d/'alphaPhi0.water').write_text(txt)
+    r=calculate(case,tmp_path/'rep2')
+    assert r['rows']==1
+    assert r['status'].startswith('PHASE_FACE_FLUX_')
+    assert r['kQ_phase_boundary_candidate']==pytest.approx(0)
+
+
+def test_temporal_pressure_diagnostics_from_synthetic_csv(tmp_path):
+    from cfd.study_v05.temporal import investigate
+    base=tmp_path/'profiles'
+    for ms in (40,50,60):
+        p=base/f'profiles_t{ms}ms';p.mkdir(parents=True)
+        for name,rad in [('axial_r1p0mm.csv',.001),('axial_r4p5mm.csv',.0045)]:
+            with (p/name).open('w',newline='') as f:
+                wr=csv.DictWriter(f,fieldnames=['Points:2','Points:0','vtkValidPointMask',
+                    'alpha.water','U:2','p_rgh'])
+                wr.writeheader()
+                for z in [x/1000 for x in range(10,91)]:
+                    pr=-80000+min(max((z-.020)/.010,0),1)*70000
+                    wr.writerow({'Points:2':z,'Points:0':rad,'vtkValidPointMask':1,
+                        'alpha.water':1,'U:2':(-2 if rad>.004 and z<.025 else 15),
+                        'p_rgh':pr})
+    out=investigate(base,tmp_path/'report')
+    assert out['n_times']==3
+    assert out['status']=='POTENTIALLY_INVALID_INCOMPRESSIBLE_GAS'
+    assert out['mixing_shock_confirmed'] is False
+    assert (tmp_path/'report/pressure_spacetime.png').exists()
+
+
+def test_medium_fine_mesh_use_wall_grading(tmp_path):
+    from cfd.study_v05.generate import build
+    build(tmp_path/'generated')
+    coarse=(tmp_path/'generated/ejector_coarse_open/system/blockMeshDict').read_text()
+    medium=(tmp_path/'generated/ejector_medium_open/system/blockMeshDict').read_text()
+    fine=(tmp_path/'generated/ejector_fine_open/system/blockMeshDict').read_text()
+    assert 'simpleGrading (1 1 1)' in coarse
+    assert 'simpleGrading (0.45' in medium
+    assert 'simpleGrading (0.25' in fine

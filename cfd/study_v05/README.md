@@ -196,3 +196,14 @@ This is a one-factor screen, **not** an optimized design or a validated
 sensitivity surface. It does not explore pressure-backpressure or 3D intake
 shape yet; these must be added as independent controlled studies after
 verification of the model and full phase-flux observables.
+
+## v0.5.1 scientific-audit update (2026-10-20)
+
+The prior note that v0.5 was unrun is historical: WSL OpenFOAM.com v2606 completed coarse Open and Closed at 60 ms (user logs); see `docs/CFD_V051_WORKFLOW_RU.md`. The **new v0.5.1 additions remain unrun** until separately preflighted.
+
+- Mesh levels `medium` and `fine` now use optional `simpleGrading` for near-wall and upstream diaphragm focusing. Coarse is unchanged; actual wall `yPlus` requires solver evaluation. Existing CFD results must not be overwritten.
+- Added `waterInventory` function object, offline `phase_flux.py` MULES face-flux auditing (`alphaPhi0.water`, `phi`), optional transient inventory check. Genuine phase conservation and kQ are **not automatically claimed**.
+- Analyzer distinguishes zero air-port flow (Closed) from convergence of the outlet; also reports the ambient-open flow separately.
+- `temporal.py` automates pressure-time maps, 50% recovery and near-wall recirculation diagnostics from repeated `pvpython` CSV exports; `wall_qc.py` reports yPlus warnings.
+- Pressure audit uses explicit **assumed** 101325 Pa absolute reference; the incompressible solver is unchanged, and severe negative gauge pressure is a stop sign for quantitative gas-pressure claims.
+- All CFD-specific new tools require WSL v2606 preflight and checks on real outputs. No claim of validated mixing shock.

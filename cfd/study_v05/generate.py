@@ -84,8 +84,7 @@ def modify_case(case: Path, geometry: dict, study: dict, meta: dict) -> dict:
             '    div(rhoPhi,U) Gauss linearUpwind grad(U);\n'
             '    div(phi,k) Gauss upwind;\n'
             '    div(phi,omega) Gauss upwind;')
-        # OpenFOAM.com v2606 kOmegaSST requires a wall-distance method.
-        # Without this block interFoam -dry-run fails before the first step.
+        # Required by OpenFOAM.com kOmegaSST wall-distance calculation.
         schemes += '\nwallDist\n{\n    method meshWave;\n}\n'
         sf.write_text(schemes, encoding='utf-8')
         fs = case/'system/fvSolution'
@@ -110,7 +109,21 @@ def modify_case(case: Path, geometry: dict, study: dict, meta: dict) -> dict:
         writeControl writeTime;
     }
 '''
-        ctrl = ctrl.replace('functions\n{', 'functions\n{'+diagnostic)
+        # Whole-domain water inventory is required to audit transient phase mass balance.
+        # This function object is supported by OpenFOAM.com; test v2606 in WSL.
+        inventory = '''
+    waterInventory
+    {
+        type volFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        regionType all;
+        operation volIntegrate;
+        fields (alpha.water);
+        enabled true;
+        writeControl writeTime;
+    }
+'''
+        ctrl = ctrl.replace('functions\n{', 'functions\n{'+diagnostic+inventory)
         cpath.write_text(ctrl, encoding='utf-8')
     cd = case/'system/controlDict'
     ctrl = cd.read_text(encoding='utf-8')
@@ -135,6 +148,9 @@ def modify_case(case: Path, geometry: dict, study: dict, meta: dict) -> dict:
     meta['mixing_shock_warning'] = ('A pressure recovery or sharp jump of sampled cell values '
         'does not alone identify a two-phase mixing shock; verify phase topology and mesh sensitivity.')
     meta['status'] = 'GENERATED_UNRUN_V05'
+    meta['diagnostic_revision'] = 'v0.5.1'
+    meta['pressure_reference_abs_pa'] = study.get('pressure_reference_abs_pa', 101325.0)
+    meta['phase_flux_source_expected'] = 'alphaPhi0.water (MULES face flux); verify on installed solver'
     # Case-local documentation must describe the actual v0.5 setup, not the
     # unmodified legacy template's v0.3 explanatory text.
     (case/'README.md').write_text(

@@ -110,17 +110,13 @@ def qc_profile(path: Path) -> dict:
          'points':points}
     for key in ('p_rgh','alpha.water','U:2'):
         if key in points[0]:
-            a=np.array([p[key] for p in points])
-            out[key+'_min']=float(np.min(a))
-            out[key+'_max']=float(np.max(a))
+            a=np.array([p[key] for p in points]);out[key+'_min']=float(np.min(a));out[key+'_max']=float(np.max(a))
     return out
 
 
 def write_csv(path: Path, rows: list[dict], columns: list[str]):
     with path.open('w',encoding='utf-8',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=columns,extrasaction='ignore')
-        w.writeheader()
-        w.writerows(rows)
+        w=csv.DictWriter(f,fieldnames=columns,extrasaction='ignore');w.writeheader();w.writerows(rows)
 
 
 def plot_series(out: Path, title: str, xlabel: str, ylabel: str, lines: list[tuple], filename: str):
@@ -132,26 +128,21 @@ def plot_series(out: Path, title: str, xlabel: str, ylabel: str, lines: list[tup
         ax.plot(x,y,label=label)
     ax.set(title=title,xlabel=xlabel,ylabel=ylabel)
     ax.grid(True,alpha=0.3)
-    if len(lines)>1:
-        ax.legend()
-    fig.tight_layout()
-    fig.savefig(out/filename,dpi=150)
-    plt.close(fig)
+    if len(lines)>1:ax.legend()
+    fig.tight_layout();fig.savefig(out/filename,dpi=150);plt.close(fig)
 
 
 def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
               log_glob: str='log.interFoam*', stability_window_s: float=0.01,
               stability_limit: float=0.05) -> dict:
     case=Path(case).expanduser().resolve()
-    report=Path(report).expanduser().resolve()
-    report.mkdir(parents=True,exist_ok=True)
+    report=Path(report).expanduser().resolve();report.mkdir(parents=True,exist_ok=True)
     manifest=json.loads((case/'case_manifest.json').read_text(encoding='utf-8')) if (case/'case_manifest.json').exists() else {}
     logs=sorted(set([*case.glob(log_glob),*case.glob('log.v05.solve')]))
     rows=parse_flux_logs(logs)
     source='console_logs'
     if not rows:
-        rows=parse_foam_function_object(case)
-        source='function_objects'
+        rows=parse_foam_function_object(case);source='function_objects'
     values={'case':str(case),'flux_source':source,'n_flux_times':len(rows),
             'assumptions':{'model':manifest.get('turbulence_model','unknown'),
                 'geometry':'2D annular-air approximation',
@@ -162,18 +153,30 @@ def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
         cols=['time_s','waterInlet','airInlet','ambientOpen','outlet','k_phi',
               'balance_m3_s','balance_relative','additional_ambient_in_m3_s']
         write_csv(report/'flux_history.csv',rows,cols)
-        ts=np.array([r['time_s'] for r in rows])
-        q=np.array([r['k_phi'] for r in rows])
-        values['final_time_s']=float(ts[-1])
-        values['k_phi_final']=float(q[-1])
+        ts=np.array([r['time_s'] for r in rows]);q=np.array([r['k_phi'] for r in rows]);
+        values['final_time_s']=float(ts[-1]);values['k_phi_final']=float(q[-1]);
         values['final_relative_volume_balance']=float(rows[-1]['balance_relative'])
         mask=ts>=ts[-1]-stability_window_s-1e-12
-        if mask.sum()>=3 and np.mean(np.abs(q[mask]))>1e-15:
-            var=float(np.ptp(q[mask])/np.mean(np.abs(q[mask])))
-            values['k_phi_window_relative_range']=var
+        # The closed intake has exactly zero k_phi by construction. Test a nonzero
+        # diagnostic outlet flux instead; never interpret stationary k_phi=0 as proof.
+        zero_air = (np.max(np.abs(np.array([r['airInlet'] for r in rows]))) < 1e-15)
+        observable = np.array([r['outlet'] for r in rows]) if zero_air else q
+        values['flux_quasi_steady_observable'] = 'outlet' if zero_air else 'k_phi'
+        if mask.sum()>=3 and np.mean(np.abs(observable[mask]))>1e-15:
+            var=float(np.ptp(observable[mask])/np.mean(np.abs(observable[mask])))
+            values['flux_observable_window_relative_range']=var
             values['flux_quasi_steady']=bool(var<=stability_limit)
+            if not zero_air:
+                values['k_phi_window_relative_range']=var
+            else:
+                aux=np.array([r['ambientOpen'] for r in rows])
+                secondary=float(np.ptp(aux[mask])/np.mean(np.abs(aux[mask]))) if np.mean(np.abs(aux[mask]))>1e-15 else None
+                values['ambient_window_relative_range']=secondary
+                values['ambient_window_stable']=(secondary is not None and secondary<=stability_limit)
+                if not values['ambient_window_stable']:
+                    values['flags'].append('Closed outlet is stable but ambientOpen has not passed flux-window check')
         else:
-            values['flags'].append('Not enough points in convergence window')
+            values['flags'].append('Not enough valid nonzero samples in convergence window')
         plot_series(report, 'Mixture flux ratio (not physical kQ)', 'Time, s',
                     '|Phi_airInlet| / |Phi_waterInlet| (signed inlet ratio)',
                     [(ts,q,'k_phi')], 'k_phi_history.png')
@@ -193,8 +196,7 @@ def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
         p=qc_profile(Path(path))
         profiles_good[label]=p
         values['profiles'][label]={k:v for k,v in p.items() if k!='points'}
-        if p['z_max_mm']<89.5:
-            values['flags'].append(f'{label}: axial profile ends before 90 mm')
+        if p['z_max_mm']<89.5:values['flags'].append(f'{label}: axial profile ends before 90 mm')
         if p['n_valid']<p['n_rows']:
             values['flags'].append(f'{label}: {p["n_rows"]-p["n_valid"]} invalid ParaView points')
     for key, unit, filename in [('p_rgh','Pa','axial_pressure.png'),
@@ -203,14 +205,24 @@ def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
         lines=[(np.array([p['z_m']*1000 for p in v['points']]),
                 np.array([p[key] for p in v['points']]), f'{label} (r={v["radius_mm"]:.2f} mm)')
                for label,v in profiles_good.items() if key in v['points'][0]]
-        if lines:
-            plot_series(report,key+' along throat','Axial coordinate z, mm',unit,lines,filename)
+        if lines: plot_series(report,key+' along throat','Axial coordinate z, mm',unit,lines,filename)
     if profiles_good and len(profiles_good)<3:
         values['flags'].append('Two axial samples do not resolve radial interface evolution or mixing shock')
     if not profiles_good:
         values['flags'].append('No axial/radial profile CSV supplied: mixing shock cannot be evaluated')
     values['flags'].append('No conservative phase-resolved air flux: true kQ cannot be reported')
     values['flags'].append('No mesh/time/turbulence validation: no quantitative physical validation')
+    # Face flux audits are read only from solver-saved fields at identical times.
+    # Do not map interpolated ParaView samples to a conservative phase flux.
+    from cfd.study_v05.phase_flux import calculate as phase_calculate
+    phase = phase_calculate(case, report)
+    from cfd.study_v05.wall_qc import audit as wall_audit
+    wall=wall_audit(case,report)
+    values['wall_yplus_passed'] = wall['near_wall_resolution_satisfied']
+    values['phase_face_flux_audit'] = phase['status']
+    values['kQ_phase_boundary_candidate'] = phase.get('kQ_phase_boundary_candidate')
+    if phase.get('rows') == 0:
+        values['flags'].append('No saved MULES alphaPhi0.water + phi face-flux pair: phase balance unavailable')
     (report/'summary.json').write_text(json.dumps(values,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
     with (report/'report.md').open('w',encoding='utf-8') as f:
         f.write('# CFD v0.5 automatic diagnostic report\n\n')
@@ -219,11 +231,10 @@ def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
             f.write(f'Last time: {values["final_time_s"]:.6g} s; '
                     f'k_phi={values["k_phi_final"]:.5g} (**mixture ratio, not kQ**); '
                     f'last relative volume imbalance={values["final_relative_volume_balance"]:.3g}.\n\n')
-            f.write(f'Quasi-steady by k_phi window criterion only: {values["flux_quasi_steady"]}.\n\n')
+            f.write(f'Quasi-steady by selected mixture-flux observable only: {values["flux_quasi_steady"]}.\n\n')
         f.write('**Mixing shock: NOT CONFIRMED.** A jump in a sampled curve is insufficient evidence.\n\n')
         f.write('## Flags and missing evidence\n\n')
-        for flag in values['flags']:
-            f.write(f'- {flag}\n')
+        for flag in values['flags']:f.write(f'- {flag}\n')
         f.write('\n## Outputs\n\n`summary.json`, `flux_history.csv` (when available), '
                 '`k_phi_history.png`, `boundary_fluxes.png`, `flux_balance.png`, '
                 'and axial profile figures (when supplied).\n')
@@ -242,5 +253,4 @@ def main():
     result=summarize(args.case,args.report,profiles,args.log_glob,args.window_s)
     print(json.dumps({k:v for k,v in result.items() if k!='profiles'},indent=2,ensure_ascii=False))
 
-if __name__=='__main__':
-    main()
+if __name__=='__main__':main()

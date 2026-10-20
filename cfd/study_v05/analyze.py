@@ -222,6 +222,7 @@ def summarize(case: Path, report: Path, profiles: dict[str,Path] | None = None,
     values['wall_yplus_passed'] = wall['near_wall_resolution_satisfied']
     values['phase_face_flux_audit'] = phase['status']
     values['kQ_phase_boundary_candidate'] = phase.get('kQ_phase_boundary_candidate')
+    values['kQ_phase_resolved'] = phase.get('kQ_phase_resolved')
     if phase.get('rows') == 0:
         values['flags'].append('No saved MULES alphaPhi0.water + phi face-flux pair: phase balance unavailable')
     (report/'summary.json').write_text(json.dumps(values,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')

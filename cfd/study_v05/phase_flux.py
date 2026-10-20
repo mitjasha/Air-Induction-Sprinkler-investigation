@@ -192,8 +192,19 @@ def calculate(case: Path, report: Path) -> dict:
                 result['flags'].append('No paired waterInventory volIntegrate(alpha.water) history; phase conservation unverified')
             # A phase flux through the air port is only entrained air if backflow water is negligible.
             last = history[-1]
-            if abs(last['airInlet_water']) > max(1e-10, .01*abs(last['airInlet_mixture'])):
-                result['flags'].append('Water present at airInlet: phase entrainment cannot use net port flux as pure air')
+            pure_air_port = abs(last['airInlet_water']) <= max(1e-10, .01*abs(last['airInlet_mixture']))
+            pure_water_feed = abs(last['waterInlet_air']) <= max(1e-10, .01*abs(last['waterInlet_mixture']))
+            if not pure_air_port:
+                result['flags'].append('Water present at airInlet: net flux is not pure air')
+            if not pure_water_feed:
+                result['flags'].append('Air present at waterInlet: feed is not pure water')
+            if (result['status'] == 'WATER_PHASE_BUDGET_NUMERICALLY_CONSISTENT'
+                    and pure_air_port and pure_water_feed
+                    and math.isfinite(result['kQ_phase_boundary_candidate'])
+                    and last['airInlet_air'] < 0 and last['waterInlet_water'] < 0):
+                # Numerical verification of a port-specific ratio, not experimental validation.
+                result['kQ_phase_resolved'] = result['kQ_phase_boundary_candidate']
+                result['kQ_scope'] = 'airInlet air volume / waterInlet water volume, incompressible assumption'
             result['flags'].append('MULES flux alphaPhi0.water and phi must represent compatible solver time levels; verify v2606')
         else:
             result['flags'].append('No verified saved water and mixture phase surface fluxes; kQ unavailable')

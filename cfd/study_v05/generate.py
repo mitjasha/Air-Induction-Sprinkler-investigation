@@ -119,6 +119,7 @@ def modify_case(case: Path, geometry: dict, study: dict, meta: dict) -> dict:
         regionType all;
         operation volIntegrate;
         fields (alpha.water);
+        writeFields false;
         enabled true;
         writeControl writeTime;
     }

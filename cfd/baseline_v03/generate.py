@@ -157,7 +157,22 @@ def mesh_geometry(cfg, with_deflector):
 def blockmesh_text(cfg, with_deflector):
     xyz,cells,patches,meta=mesh_geometry(cfg,with_deflector)
     vertices='\n'.join('    (%.10g %.10g %.10g)'%v for v in xyz)
-    blocks='\n'.join(f"    hex ({' '.join(map(str,c['vs']))}) ({c['nr']} {c['nz']} 1) simpleGrading (1 1 1)" for c in cells)
+    def grading(cell):
+        # OpenFOAM simpleGrading ratios are last/first cell sizes.
+        # Radial coordinate increases toward a wall for core and annulus blocks.
+        radial = float(cfg.get('radial_grading_core', 1.0) if cell['kind'] in ('core', 'nozzle', 'feedCore')
+                       else cfg.get('radial_grading_annulus', 1.0))
+        axial = 1.0
+        if cell['kind'] in ('feedCore', 'feedAnnulus'):
+            # Smaller last cell at the upstream diaphragm when ratio < 1.
+            axial = float(cfg.get('axial_grading_feed', 1.0))
+        elif cell['kind'] in ('core', 'annulus') and abs(cell['z0']) < 1e-12:
+            # Smaller first cell at the nozzle/entrance when ratio > 1.
+            axial = float(cfg.get('axial_grading_suction', 1.0))
+        if not (0.05 <= radial <= 20 and 0.05 <= axial <= 20):
+            raise ValueError('Mesh grading ratios must be in [0.05, 20]')
+        return f'{radial:.8g} {axial:.8g} 1'
+    blocks='\n'.join(f"    hex ({' '.join(map(str,c['vs']))}) ({c['nr']} {c['nz']} 1) simpleGrading ({grading(c)})" for c in cells)
     patch_text=[]
     for p,fl in patches.items():
         ptype= 'wedge' if p.startswith('wedge') else ('empty' if p=='axis' else ('wall' if p.endswith('Wall') or (p=='airInlet' and cfg['air_mode']=='closed') else 'patch'))

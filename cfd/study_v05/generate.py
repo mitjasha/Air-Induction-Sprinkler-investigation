@@ -84,6 +84,9 @@ def modify_case(case: Path, geometry: dict, study: dict, meta: dict) -> dict:
             '    div(rhoPhi,U) Gauss linearUpwind grad(U);\n'
             '    div(phi,k) Gauss upwind;\n'
             '    div(phi,omega) Gauss upwind;')
+        # OpenFOAM.com v2606 kOmegaSST requires a wall-distance method.
+        # Without this block interFoam -dry-run fails before the first step.
+        schemes += '\nwallDist\n{\n    method meshWave;\n}\n'
         sf.write_text(schemes, encoding='utf-8')
         fs = case/'system/fvSolution'
         solution = fs.read_text(encoding='utf-8')

@@ -38,7 +38,10 @@ def test_generator_six_cases_and_sst_settings(tmp_path):
         assert 'type nutUSpaldingWallFunction;' in (path/'0/nut').read_text()
         assert 'simulationType RAS;' in (path/'constant/turbulenceProperties').read_text()
         assert 'RASModel kOmegaSST;' in (path/'constant/turbulenceProperties').read_text()
-        assert 'div(phi,k)' in (path/'system/fvSchemes').read_text()
+        schemes = (path/'system/fvSchemes').read_text()
+        assert 'div(phi,k)' in schemes
+        assert schemes.count('wallDist') == 1
+        assert 'wallDist\n{\n    method meshWave;\n}' in schemes
         assert '    omega {' in (path/'system/fvSolution').read_text()
         assert 'wallYPlus' in (path/'system/controlDict').read_text()
         assert 'endTime 0.06;' in (path/'system/controlDict').read_text()

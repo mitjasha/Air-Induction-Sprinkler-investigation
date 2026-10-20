@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Audit SST near-wall resolution using OpenFOAM yPlus function-object log lines.
 
 Keep patch minima/maxima and report per-patch maximum; an empty patch is not a

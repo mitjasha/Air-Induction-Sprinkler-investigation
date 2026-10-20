@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """v0.5 static tests. No real solver is installed in this test environment."""
 import csv
 import json

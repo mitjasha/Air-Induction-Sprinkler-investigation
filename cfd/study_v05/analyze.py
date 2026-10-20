@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Turn OpenFOAM logs and ParaView CSV profiles into reproducible QC reports.
 
 This does NOT infer phase-specific flow from mixture flux alone.

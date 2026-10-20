@@ -1,3 +1,4 @@
+# ruff: noqa: E701, E702, E703
 """Reproducible temporal diagnostics of a suspected ejector pressure transition.
 
 Input: directories profiles_t0p04/, profiles_t42ms/, etc, containing ParaView

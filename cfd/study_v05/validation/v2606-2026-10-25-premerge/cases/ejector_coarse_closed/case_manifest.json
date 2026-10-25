@@ -1,0 +1,118 @@
+{
+  "status": "GENERATED_UNRUN_V05",
+  "solver": "OpenFOAM.com interFoam",
+  "solver_versions_supported_expected": [
+    "v2512",
+    "v2606"
+  ],
+  "model": "2D axisymmetric wedge; incompressible VOF; entrainment at annular intake",
+  "case_type": "ejector_only",
+  "geometry_source": {
+    "nozzle_d_mm": "historical range 7.6–8.8 mm (example 7.9)",
+    "throat_d_mm": "historical approximate 9–10 mm",
+    "throat_length_mm": "historical 85 mm",
+    "other_dimensions": "exploratory assumptions, NOT historical measurement",
+    "patent_references": [
+      "BY 22927 (sprinkler nozzle)",
+      "BY 22747 (hydrojet ejector)"
+    ]
+  },
+  "nominal_water_flow_m3_s": 0.0005881438438638522,
+  "mesh": {
+    "suction_chamber_radius_m": 0.008,
+    "throat_start_z_m": 0.008,
+    "throat_exit_z_m": 0.093,
+    "axial_stations_m": [
+      0.0,
+      0.008,
+      0.093,
+      0.108
+    ],
+    "radii_m": [
+      [
+        0.0,
+        0.00395,
+        0.008
+      ],
+      [
+        0.0,
+        0.00395,
+        0.00475
+      ],
+      [
+        0.0,
+        0.00395,
+        0.00475
+      ],
+      [
+        0.0,
+        0.00395,
+        0.00475
+      ]
+    ],
+    "wedge_angle_deg": 5.0,
+    "cells_estimate": 5160,
+    "diaphragm_thickness_m": 0.0012,
+    "feed_radius_m": 0.008,
+    "patch_face_counts": {
+      "waterInlet": 2,
+      "wedgePlus": 9,
+      "wedgeMinus": 9,
+      "diaphragmWall": 1,
+      "feedWall": 1,
+      "nozzleWall": 1,
+      "airInlet": 1,
+      "suctionWall": 1,
+      "throatWall": 1,
+      "outlet": 2,
+      "ambientOpen": 1,
+      "axis": 0,
+      "deflectorWall": 0
+    }
+  },
+  "parameters": {
+    "nozzle_d_mm": 7.9,
+    "feed_d_mm": 16.0,
+    "feed_length_mm": 12.0,
+    "diaphragm_thickness_mm": 1.2,
+    "throat_d_mm": 9.5,
+    "throat_length_mm": 85.0,
+    "nozzle_to_throat_gap_mm": 8.0,
+    "suction_chamber_d_mm": 16.0,
+    "air_port_d_mm": 5.0,
+    "air_port_length_mm": 20.0,
+    "deflector_standoff_mm": 15.0,
+    "deflector_radius_mm": 14.0,
+    "deflector_length_mm": 25.0,
+    "water_inlet_speed_m_s": 2.9251875,
+    "wedge_angle_deg": 5.0,
+    "radial_cells_core": 20,
+    "radial_cells_air": 10,
+    "axial_cell_size_mm": 0.7,
+    "end_time_s": 0.06,
+    "air_mode": "closed"
+  },
+  "grid_level": "coarse",
+  "air_mode": "closed",
+  "study_config": "/tmp/paperclip-run-cou-61-0a13f0fe-9e6-Z34myd/pr2-de49a13/cfd/study_v05/study_config.json",
+  "geometry_config": "/tmp/paperclip-run-cou-61-0a13f0fe-9e6-Z34myd/pr2-de49a13/cfd/patent_v04/config_open.json",
+  "study_version": "v0.5",
+  "turbulence_model": "kOmegaSST",
+  "turbulence_initial_conditions": {
+    "water_k": 0.032087707163085934,
+    "air_k": 0.0037500000000000007,
+    "water_omega": 292.005272184494,
+    "air_omega": 37.2677996249965,
+    "length_water_m": 0.0011200000000000001,
+    "length_air_m": 0.003,
+    "intensity_water": 0.05,
+    "intensity_air": 0.05,
+    "formula": "k=1.5*(U*I)^2; omega=sqrt(k)/(Cmu^0.25*L)"
+  },
+  "mesh_convergence_warning": "Mesh resolution is not synonymous with low yPlus. Check wallYPlus on every wall; mesh is uniform radial and has no targeted boundary-layer inflation.",
+  "phase_flux_note": "sum(phi) is mixture volumetric flux. No solver-conservative air-only flux has been measured; kQ is not available until measured separately.",
+  "mixing_shock_warning": "A pressure recovery or sharp jump of sampled cell values does not alone identify a two-phase mixing shock; verify phase topology and mesh sensitivity.",
+  "diagnostic_revision": "v0.5.1",
+  "pressure_reference_abs_pa": 101325.0,
+  "phase_flux_source_expected": "alphaPhi0.water (MULES face flux); verify on installed solver"
+}

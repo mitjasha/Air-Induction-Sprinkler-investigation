@@ -1,0 +1,136 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2606                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
+Arch   : "LSB;label=32;scalar=64"
+Exec   : blockMesh -case /work/generated/ejector_coarse_open
+Date   : Oct 25 2026
+Time   : 09:27:05
+Host   : 36866adb9eb6
+PID    : 492
+I/O    : uncollated
+Case   : /work/generated/ejector_coarse_open
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+
+Creating topology patches - from boundary section
+
+Creating block mesh topology
+--> FOAM Warning : 
+    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::PtrList<Foam::dictionary>&, const Foam::word&, const Foam::word&, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 905
+    Found 5 undefined faces in mesh; adding to default patch defaultFaces
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 10
+		Number of boundary faces : 34
+		Number of defined boundary faces : 34
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+
+Detected collapsed blocks - using merge points instead of merge topology
+
+Creating block offsets
+Creating merge list (geometric search)...
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale (1 1 1)
+    Block 0 cell size :
+        i : 0.0001975 .. 0.0001975
+        j : 0.0007058823529 .. 0.0007058823529
+        k : 0 .. 0
+
+    Block 1 cell size :
+        i : 0.0004050000001 .. 0.0004050000001
+        j : 0.0007058823529 .. 0.0007058823529
+        k : 0.0003445931602 .. 0.0003445931602
+
+    Block 2 cell size :
+        i : 0.0001975 .. 0.0001975
+        j : 0.0004 .. 0.0004
+        k : 0 .. 0
+
+    Block 3 cell size :
+        i : 0.0001975 .. 0.0001975
+        j : 0.0007272727273 .. 0.0007272727273
+        k : 0 .. 0
+
+    Block 4 cell size :
+        i : 0.0004050000001 .. 0.0004050000001
+        j : 0.0007272727273 .. 0.0007272727273
+        k : 0.0003445931602 .. 0.0003445931602
+
+    Block 5 cell size :
+        i : 0.0001975 .. 0.0001975
+        j : 0.0007024793388 .. 0.0007024793388
+        k : 0 .. 0
+
+    Block 6 cell size :
+        i : 8.000000007e-05 .. 8.000000007e-05
+        j : 0.0007024793388 .. 0.0007024793388
+        k : 0.0003445931602 .. 0.0003445931602
+
+    Block 7 cell size :
+        i : 0.0001975 .. 0.0001975
+        j : 0.0007142857143 .. 0.0007142857143
+        k : 0 .. 0
+
+    Block 8 cell size :
+        i : 8.000000007e-05 .. 8.000000007e-05
+        j : 0.0007142857143 .. 0.0007142857143
+        k : 0.0003445931602 .. 0.0003445931602
+
+No patch pairs to merge
+
+Writing polyMesh with 0 cellZones
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 -0.0003489550989 -0.0132) (0.007992385773 0.0003489550989 0.108)
+  nPoints: 10574
+  nCells: 5160
+  nFaces: 20680
+  nInternalFaces: 10107
+----------------
+Patches
+----------------
+  patch 0 (start: 10107 size: 30) name: waterInlet
+  patch 1 (start: 10137 size: 5160) name: wedgePlus
+  patch 2 (start: 15297 size: 5160) name: wedgeMinus
+  patch 3 (start: 20457 size: 10) name: diaphragmWall
+  patch 4 (start: 20467 size: 17) name: feedWall
+  patch 5 (start: 20484 size: 3) name: nozzleWall
+  patch 6 (start: 20487 size: 10) name: airInlet
+  patch 7 (start: 20497 size: 11) name: suctionWall
+  patch 8 (start: 20508 size: 121) name: throatWall
+  patch 9 (start: 20629 size: 30) name: outlet
+  patch 10 (start: 20659 size: 21) name: ambientOpen
+  patch 11 (start: 20680 size: 0) name: axis
+  patch 12 (start: 20680 size: 0) name: deflectorWall
+  patch 13 (start: 20680 size: 0) name: defaultFaces
+
+End
+

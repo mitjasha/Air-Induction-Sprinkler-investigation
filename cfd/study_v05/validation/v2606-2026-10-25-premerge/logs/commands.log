@@ -1,0 +1,8 @@
+2026-10-25T09:27:04Z	blockMesh -case /work/generated/ejector_coarse_open
+2026-10-25T09:27:05Z	checkMesh -case /work/generated/ejector_coarse_open -allTopology -allGeometry
+2026-10-25T09:27:06Z	interFoam -case /work/generated/ejector_coarse_open -dry-run-write
+2026-10-25T09:27:08Z	blockMesh -case /work/generated/ejector_coarse_closed
+2026-10-25T09:27:09Z	checkMesh -case /work/generated/ejector_coarse_closed -allTopology -allGeometry
+2026-10-25T09:27:10Z	interFoam -case /work/generated/ejector_coarse_closed -dry-run-write
+2026-10-25T09:27:24Z	interFoam -case /work/short/ejector_coarse_open
+2026-10-25T09:27:31Z	interFoam -case /work/short/ejector_coarse_closed

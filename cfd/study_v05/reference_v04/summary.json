@@ -1,0 +1,53 @@
+{
+  "case": "/mnt/data/air_induction_v05_build/v04_60ms_reference/case",
+  "flux_source": "console_logs",
+  "n_flux_times": 1,
+  "assumptions": {
+    "model": "unknown",
+    "geometry": "2D annular-air approximation",
+    "mixing_flux": "OpenFOAM phi, NOT phase air volumetric flow"
+  },
+  "kQ_phase_resolved": null,
+  "mixing_shock_confirmed": false,
+  "flux_quasi_steady": false,
+  "profiles": {
+    "axis": {
+      "source_file": "/mnt/data/axis_profile_60ms.csv",
+      "n_rows": 1001,
+      "n_valid": 1001,
+      "z_min_mm": 10.0,
+      "z_max_mm": 45.0,
+      "radius_mm": 1.0,
+      "p_rgh_min": 11.732,
+      "p_rgh_max": 84.685,
+      "alpha.water_min": 1.0,
+      "alpha.water_max": 1.0,
+      "U:2_min": 19.217,
+      "U:2_max": 19.221
+    },
+    "wall": {
+      "source_file": "/mnt/data/wall_profile_60ms.csv",
+      "n_rows": 1001,
+      "n_valid": 1001,
+      "z_min_mm": 10.0,
+      "z_max_mm": 90.0,
+      "radius_mm": 4.5,
+      "p_rgh_min": -7.6005,
+      "p_rgh_max": -0.44076,
+      "alpha.water_min": -1.4999e-36,
+      "alpha.water_max": 5.4025e-08,
+      "U:2_min": 0.24025,
+      "U:2_max": 2.4387
+    }
+  },
+  "flags": [
+    "Not enough points in convergence window",
+    "axis: axial profile ends before 90 mm",
+    "Two axial samples do not resolve radial interface evolution or mixing shock",
+    "No conservative phase-resolved air flux: true kQ cannot be reported",
+    "No mesh/time/turbulence validation: no quantitative physical validation"
+  ],
+  "final_time_s": 0.06,
+  "k_phi_final": 0.2544868833825054,
+  "final_relative_volume_balance": -5.163085158765193e-07
+}

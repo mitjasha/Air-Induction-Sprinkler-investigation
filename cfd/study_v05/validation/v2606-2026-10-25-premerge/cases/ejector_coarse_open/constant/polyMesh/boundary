@@ -1,0 +1,117 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2606                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+14
+(
+    waterInlet
+    {
+        type            patch;
+        nFaces          30;
+        startFace       10107;
+    }
+    wedgePlus
+    {
+        type            wedge;
+        inGroups        1(wedge);
+        nFaces          5160;
+        startFace       10137;
+    }
+    wedgeMinus
+    {
+        type            wedge;
+        inGroups        1(wedge);
+        nFaces          5160;
+        startFace       15297;
+    }
+    diaphragmWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          10;
+        startFace       20457;
+    }
+    feedWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          17;
+        startFace       20467;
+    }
+    nozzleWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          3;
+        startFace       20484;
+    }
+    airInlet
+    {
+        type            patch;
+        nFaces          10;
+        startFace       20487;
+    }
+    suctionWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          11;
+        startFace       20497;
+    }
+    throatWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          121;
+        startFace       20508;
+    }
+    outlet
+    {
+        type            patch;
+        nFaces          30;
+        startFace       20629;
+    }
+    ambientOpen
+    {
+        type            patch;
+        nFaces          21;
+        startFace       20659;
+    }
+    axis
+    {
+        type            empty;
+        inGroups        1(empty);
+        nFaces          0;
+        startFace       20680;
+    }
+    deflectorWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          0;
+        startFace       20680;
+    }
+    defaultFaces
+    {
+        type            empty;
+        inGroups        1(empty);
+        nFaces          0;
+        startFace       20680;
+    }
+)
+
+// ************************************************************************* //

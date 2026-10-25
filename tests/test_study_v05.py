@@ -211,6 +211,29 @@ def test_medium_fine_mesh_use_wall_grading(tmp_path):
     assert 'simpleGrading (0.25' in fine
 
 
+def test_wall_qc_reads_v2606_dat_and_uses_latest_physical_time(tmp_path):
+    from cfd.study_v05.wall_qc import audit
+    case = tmp_path/'case'
+    old = case/'postProcessing/wallYPlus/0'
+    restart = case/'postProcessing/wallYPlus/0.00008'
+    old.mkdir(parents=True); restart.mkdir(parents=True)
+    (old/'yPlus.dat').write_text(
+        '# Time patch min max average\n'
+        '2e-05 feedWall 0.1 4 1\n'
+        '2e-05 deflectorWall 1e+300 -1e+300 0\n')
+    (restart/'yPlus.dat').write_text(
+        '# Time patch min max average\n'
+        '0.00008 feedWall 0.2 0.8 0.5\n'
+        '0.00008 nozzleWall 0.1 1.2 0.6\n'
+        'incomplete final row\n')
+    result = audit(case, tmp_path/'report', target_yplus=1)
+    assert result['n_readings'] == 3
+    assert [row['patch'] for row in result['patches']] == ['feedWall', 'nozzleWall']
+    assert result['patches'][0]['time_s'] == pytest.approx(8e-5)
+    assert result['near_wall_resolution_satisfied'] is False
+    assert result['flags'] == ['nozzleWall: max y+ 1.20 exceeds near-wall target 1']
+
+
 def test_phase_kq_only_after_verified_saved_inventory_and_purity(tmp_path):
     from cfd.study_v05.phase_flux import calculate
     case=tmp_path/'case'

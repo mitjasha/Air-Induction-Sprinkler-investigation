@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+command -v blockMesh >/dev/null || { echo "ERROR: OpenFOAM environment not sourced" >&2; exit 127; }
+command -v interFoam >/dev/null || { echo "ERROR: interFoam missing" >&2; exit 127; }
+blockMesh > log.blockMesh 2>&1
+checkMesh -allTopology -allGeometry > log.checkMesh 2>&1
+interFoam > log.interFoam 2>&1
+echo "Finished; inspect logs and residuals BEFORE interpreting any physical outputs"

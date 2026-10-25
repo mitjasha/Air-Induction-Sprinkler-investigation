@@ -1,0 +1,100 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| CFD v0.5 INPUT: GENERATED / CHECK WITH OPENFOAM                        |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version 2.0;
+    format ascii;
+    class dictionary;
+    location "system";
+    object controlDict;
+}
+// ************************************************************************* //
+application interFoam;
+startFrom startTime;
+startTime 0;
+stopAt endTime;
+endTime 0.06;
+deltaT 1e-8;
+writeControl adjustableRunTime;
+writeInterval 0.002;
+purgeWrite 0;
+writeFormat ascii;
+writePrecision 10;
+adjustTimeStep yes;
+maxCo 0.2;
+maxAlphaCo 0.2;
+maxDeltaT 1e-5;
+runTimeModifiable yes;
+functions
+{
+    wallYPlus
+    {
+        type yPlus;
+        libs ("libfieldFunctionObjects.so");
+        enabled true;
+        executeControl writeTime;
+        writeControl writeTime;
+    }
+
+    waterInventory
+    {
+        type volFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        regionType all;
+        operation volIntegrate;
+        fields (alpha.water);
+        writeFields false;
+        enabled true;
+        writeControl writeTime;
+    }
+
+    inletOutletFlux
+    {
+        type surfaceFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        enabled true;
+        writeControl writeTime;
+        regionType patch;
+        name airInlet;
+        operation sum;
+        fields (phi);
+        writeFields false;
+    }
+    waterInletFlux
+    {
+        type surfaceFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        enabled true;
+        writeControl writeTime;
+        regionType patch;
+        name waterInlet;
+        operation sum;
+        fields (phi);
+        writeFields false;
+    }
+    ambientFlux
+    {
+        type surfaceFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        enabled true;
+        writeControl writeTime;
+        regionType patch;
+        name ambientOpen;
+        operation sum;
+        fields (phi);
+        writeFields false;
+    }
+    exitFlux
+    {
+        type surfaceFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        enabled true;
+        writeControl writeTime;
+        regionType patch;
+        name outlet;
+        operation sum;
+        fields (phi);
+        writeFields false;
+    }
+}

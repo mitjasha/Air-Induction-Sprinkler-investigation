@@ -1,0 +1,15 @@
+{
+  "case": "/tmp/paperclip-run-cou-61-0a13f0fe-9e6-Z34myd/pr2-de49a13/short/ejector_coarse_closed",
+  "source": "saved solver surfaceScalarField alphaPhi0.water",
+  "status": "WATER_PHASE_BUDGET_NUMERICALLY_CONSISTENT",
+  "kQ_phase_resolved": null,
+  "rows": 5,
+  "flags": [
+    "1.2e-08: waterInlet: face count mismatch (4 declared, 4 values, 30 mesh)",
+    "MULES flux alphaPhi0.water and phi must represent compatible solver time levels; verify v2606"
+  ],
+  "latest_time_s": 0.0001,
+  "kQ_phase_boundary_candidate": -0.0,
+  "water_phase_conservation_rel_max": 4.927477858577602e-11,
+  "water_phase_conservation_rel_last": 1.2011892712333799e-11
+}

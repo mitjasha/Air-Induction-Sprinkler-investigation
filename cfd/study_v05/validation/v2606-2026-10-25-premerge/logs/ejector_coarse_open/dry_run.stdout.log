@@ -1,0 +1,167 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2606                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
+Arch   : "LSB;label=32;scalar=64"
+Exec   : interFoam -case /work/generated/ejector_coarse_open -dry-run-write
+Date   : Oct 25 2026
+Time   : 09:27:07
+Host   : 36866adb9eb6
+PID    : 1018
+I/O    : uncollated
+Case   : /work/generated/ejector_coarse_open
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Operating in 'dry-run' mode: case will run for 1 time step.  All checks assumed OK on a clean exit
+Selecting simplified mesh model staticFvMesh
+Creating simplified mesh using "/work/generated/ejector_coarse_open/constant/polyMesh"
+Mesh bounds: (0 -0.0003489550989 -0.0132) (0.007992385773 0.0003489550989 0.108)
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p_rgh
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Reading transportProperties
+
+Selecting incompressible transport model Newtonian
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type RAS
+Selecting RAS turbulence model kOmegaSST
+Selecting patchDistMethod meshWave
+RAS
+{
+    RASModel        kOmegaSST;
+    turbulence      on;
+    printCoeffs     on;
+    alphaK1         0.85;
+    alphaK2         1;
+    alphaOmega1     0.5;
+    alphaOmega2     0.856;
+    gamma1          0.5555555556;
+    gamma2          0.44;
+    beta1           0.075;
+    beta2           0.0828;
+    betaStar        0.09;
+    a1              0.31;
+    b1              1;
+    c1              10;
+    F3              false;
+    decayControl    false;
+    kInf            0;
+    omegaInf        0;
+}
+
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+No MRF models present
+
+No finite volume options present
+DICPCG:  Solving for pcorr, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+Courant Number mean: 2.681690044e-08 max: 2.41352104e-07
+surfaceFieldValue inletOutletFlux:
+    operation     = sum
+
+
+surfaceFieldValue waterInletFlux:
+    operation     = sum
+
+
+surfaceFieldValue ambientFlux:
+    operation     = sum
+
+
+surfaceFieldValue exitFlux:
+    operation     = sum
+
+
+
+Starting time loop
+
+Courant Number mean: 2.681690044e-08 max: 2.41352104e-07
+Interface Courant Number mean: 0 max: 0
+deltaT = 1.1999976e-08
+Time = 1.2e-08
+
+PIMPLE: iteration 1
+MULES: Solving for alpha.water
+MULES: Solving for alpha.water
+Phase-1 volume fraction = 0  Min(alpha.water) = 0  Max(alpha.water) = 1
+MULES: Solving for alpha.water
+MULES: Solving for alpha.water
+Phase-1 volume fraction = 0  Min(alpha.water) = 0  Max(alpha.water) = 1
+DICPCG:  Solving for p_rgh, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+DICPCG:  Solving for p_rgh, Initial residual = 2.374791918e-19, Final residual = 2.374791918e-19, No Iterations 0
+time step continuity errors : sum local = 4.21528883e-41, global = 4.21528883e-41, cumulative = 4.21528883e-41
+DICPCG:  Solving for p_rgh, Initial residual = 2.374791918e-19, Final residual = 2.374791918e-19, No Iterations 0
+time step continuity errors : sum local = 4.21528883e-41, global = 4.21528883e-41, cumulative = 8.43057766e-41
+smoothSolver:  Solving for omega, Initial residual = 6.883979083e-07, Final residual = 1.987787148e-19, No Iterations 1
+smoothSolver:  Solving for k, Initial residual = 1, Final residual = 1.889057699e-11, No Iterations 1
+ExecutionTime = 0.16 s  ClockTime = 1 s
+
+yPlus wallYPlus write:
+    writing field yPlus
+    patch diaphragmWall y+ : min = 0.0001513106992, max = 0.0001513106992, average = 0.0001513106992
+    patch feedWall y+ : min = 2.087524452e-07, max = 2.087524452e-07, average = 2.087524452e-07
+    patch nozzleWall y+ : min = 0, max = 0, average = 0
+    patch suctionWall y+ : min = 0, max = 0, average = 0
+    patch throatWall y+ : min = 0, max = 0, average = 0
+--> FOAM Warning : 
+    From Type Foam::gAverage(const UList<T>&, label) [with Type = double; label = int]
+    in file ./src/OpenFOAM/lnInclude/FieldFunctions.C at line 667
+    empty field, returning zero.
+    patch deflectorWall y+ : min = 1e+300, max = -1e+300, average = 0
+volFieldValue waterInventory write:
+    volIntegrate(region0) of alpha.water = 0
+
+surfaceFieldValue inletOutletFlux write:
+    total faces   = 4
+    total area    = 0.0002165011385
+
+    sum(airInlet) of phi = 0
+
+surfaceFieldValue waterInletFlux write:
+    total faces   = 4
+    total area    = 0.0002165011385
+
+    sum(waterInlet) of phi = 0
+
+surfaceFieldValue ambientFlux write:
+    total faces   = 4
+    total area    = 0.0002165011385
+
+    sum(ambientOpen) of phi = 0
+
+surfaceFieldValue exitFlux write:
+    total faces   = 4
+    total area    = 0.0002165011385
+
+    sum(outlet) of phi = 0
+
+End
+

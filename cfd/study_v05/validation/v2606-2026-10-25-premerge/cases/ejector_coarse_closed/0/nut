@@ -1,0 +1,30 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| CFD v0.5 INPUT: GENERATED / CHECK WITH OPENFOAM                        |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version 2.0;
+    format ascii;
+    class volScalarField;
+    location "0";
+    object nut;
+}
+// ************************************************************************* //
+dimensions [0 2 -1 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{
+    waterInlet { type calculated; value uniform 0; }
+    airInlet { type nutUSpaldingWallFunction; value uniform 0; }
+    outlet { type calculated; value uniform 0; }
+    ambientOpen { type calculated; value uniform 0; }
+    axis { type empty; }
+    wedgePlus { type wedge; }
+    wedgeMinus { type wedge; }
+    feedWall { type nutUSpaldingWallFunction; value uniform 0; }
+    diaphragmWall { type nutUSpaldingWallFunction; value uniform 0; }
+    nozzleWall { type nutUSpaldingWallFunction; value uniform 0; }
+    suctionWall { type nutUSpaldingWallFunction; value uniform 0; }
+    throatWall { type nutUSpaldingWallFunction; value uniform 0; }
+    deflectorWall { type nutUSpaldingWallFunction; value uniform 0; }
+}

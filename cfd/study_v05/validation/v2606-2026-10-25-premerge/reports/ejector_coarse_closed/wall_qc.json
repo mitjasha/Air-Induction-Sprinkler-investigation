@@ -1,0 +1,9 @@
+{
+  "n_readings": 0,
+  "patches": [],
+  "target_yplus": 1.0,
+  "near_wall_resolution_satisfied": false,
+  "flags": [
+    "No valid yPlus readings in solver logs"
+  ]
+}
